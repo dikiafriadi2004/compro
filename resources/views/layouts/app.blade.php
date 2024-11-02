@@ -1,36 +1,43 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
+    <!-- BEGIN: Head -->
     <head>
         <meta charset="utf-8">
+        <link href="{{ asset('dist/images/logo.svg') }}" rel="shortcut icon">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- BEGIN: CSS Assets-->
+        <link rel="stylesheet" href="{{ asset('dist/css/app.css') }}" />
+        @stack('js')
+        <!-- END: CSS Assets-->
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+    <!-- END: Head -->
+    <body class="main">
+        <!-- BEGIN: Mobile Menu -->
+        @include('layouts.mobile-menu')
+        
+        <!-- END: Mobile Menu -->
+        <!-- BEGIN: Top Bar -->
+        @include('layouts.navbar')
+        <!-- END: Top Bar -->
+        <div class="wrapper">
+            <div class="wrapper-box">
+                <!-- BEGIN: Side Menu -->
+                @include('layouts.sidebar')
+                <!-- END: Side Menu -->
+                <!-- BEGIN: Content -->
+                @yield('content')
+                <!-- END: Content -->
+            </div>
         </div>
+        
+        <!-- BEGIN: JS Assets-->
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
+        <script src="{{ asset('dist/js/app.js') }}"></script>
+        @stack('js')
+        <!-- END: JS Assets-->
     </body>
 </html>

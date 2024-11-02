@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -13,8 +14,9 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $data = Post::all();
-        print_r($data);
+        $user = Auth::user();
+        $data = Post::where('user_id', $user->id)->orderBy('id', 'desc')->paginate(2);
+        return view('member.blogs.index', compact('data'));
     }
 
     /**
@@ -36,7 +38,7 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $blog)
     {
         //
     }
@@ -44,15 +46,15 @@ class BlogController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $blog)
     {
-        //
+        return view('member.blogs.edit');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $blog)
     {
         //
     }
@@ -60,7 +62,7 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $blog)
     {
         //
     }
