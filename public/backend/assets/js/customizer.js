@@ -1,5 +1,5 @@
 // Customizer
-$("body").append('<div class=customizer-layer></div><div class=customizer-action><i data-feather="settings"></i></div><div class=theme-cutomizer><div class=customizer-header><h4>Theme Setting</h4><div class=close-customizer><i data-feather="x"></i></div></div><div class=customizer-body><div class="cutomize-group d-none d-xl-block"><h6 class=customizer-title>Sidebar Type</h6><ul class="customizeoption-list sidebaroption-list"><li class=sidedefault-action>Default<li class=sidecompact-action>compact<li class=sidehorizontal-action>horizontal</ul></div><div class="cutomize-group mb-0"><h6 class=customizer-title>Layout mode</h6><ul class=customizeoption-list><li class=light-action>light<li class=dark-action>dark</ul></div></div></div>');
+// $("body").append('<div class=customizer-layer></div><div class=customizer-action><i data-feather="settings"></i></div><div class=theme-cutomizer><div class=customizer-header><h4>Theme Setting</h4><div class=close-customizer><i data-feather="x"></i></div></div><div class=customizer-body><div class="cutomize-group d-none d-xl-block"><h6 class=customizer-title>Sidebar Type</h6><ul class="customizeoption-list sidebaroption-list"><li class=sidedefault-action>Default<li class=sidecompact-action>compact<li class=sidehorizontal-action>horizontal</ul></div><div class="cutomize-group mb-0"><h6 class=customizer-title>Layout mode</h6><ul class=customizeoption-list><li class=light-action>light<li class=dark-action>dark</ul></div></div></div>');
 
 const body = $('body');
 const darkModeBtn = $('.action-dark');
@@ -16,15 +16,15 @@ function setActiveMode(button) {
 //*** Light & Dark toggle action ***//
 darkModeBtn.click(function () {
     const isDark = body.attr('data-bs-theme') === 'dark';
-    
+
     // Toggle theme
     body.attr('data-bs-theme', isDark ? 'light' : 'dark');
     localStorage.setItem('theme', isDark ? 'light' : 'dark');
-    
+
     // Toggle icons
     darkIcon.toggle(!isDark);
     lightIcon.toggle(isDark);
-    
+
     // Set active mode
     setActiveMode(isDark ? $('.light-action') : $('.dark-action'));
 });
@@ -95,7 +95,7 @@ $('.sidedefault-action').click(function () {
 $('.sidecompact-action').click(function () {
     body.attr('data-sidebar-type', 'compact');
     localStorage.setItem('sidebartype', 'compact');
-    setActiveMode($('.sidecompact-action'));   
+    setActiveMode($('.sidecompact-action'));
     window.location.reload();
 });
 $('.sidehorizontal-action').click(function () {
@@ -114,7 +114,7 @@ if (savedSidebatype === 'compact') {
     setActiveMode($('.sidecompact-action'));
 } else if (savedSidebatype === 'horizontal') {
     setActiveMode($('.sidehorizontal-action'));
-   
+
     const $menuWrapper = $('.codex-menuwrapper');
     const $menu = $('.codex-menu');
     let currentPosition = 0;
@@ -170,7 +170,7 @@ if (savedSidebatype === 'compact') {
         $('.menu-next, .menu-preve').addClass('disabled');
     }
 
-    
+
 } else {
     setActiveMode($('.sidedefault-action'));
 }
@@ -193,10 +193,10 @@ if (dark_mode){
 
 //** Theme color mode  ***//
 $(document).ready(function () {
-    $('.customizeoption-list.themecolor-list li').on('click', function () {       
-        $('.customizeoption-list.themecolor-list li').removeClass('active-mode');       
-        $(this).addClass('active-mode');      
-        const themeColor = $(this).data('theme-color');       
+    $('.customizeoption-list.themecolor-list li').on('click', function () {
+        $('.customizeoption-list.themecolor-list li').removeClass('active-mode');
+        $(this).addClass('active-mode');
+        const themeColor = $(this).data('theme-color');
         $('body').attr('data-theme-color', themeColor);
     });
 });
@@ -204,9 +204,9 @@ $(document).ready(function () {
 
 
 //*** Customizer Action ***//
-$('.customizer-action').click(function(){
-    $('.theme-cutomizer , .customizer-layer').toggleClass('active');
-});
+// $('.customizer-action').click(function(){
+//     $('.theme-cutomizer , .customizer-layer').toggleClass('active');
+// });
 
 $('.customizer-header').click(function(){
     $('.theme-cutomizer , .customizer-layer').toggleClass('active');

@@ -62,6 +62,8 @@
     <script src="{{ asset('backend/assets/js/jquery-3.7.1.min.js') }}"></script>
     <!-- Config -->
     <script src="{{ asset('backend/assets/js/layout-config.js') }}"></script>
+    <!-- Customizer-->
+  <script src="{{ asset('backend/assets/js/customizer.js') }}"></script>
     <!-- Feather icons js-->
     <script src="{{ asset('backend/assets/js/icons/feather-icon/feather.js') }}"></script>
     <!-- Bootstrap js-->
