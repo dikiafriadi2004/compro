@@ -41,7 +41,7 @@
                                                 <div class="input-group">
                                                     <div class="input-group-text cdxappsearch-toggle"><i data-feather="search"></i>
                                                     </div>
-                                                    <input class="form-control" type="text" id="search" name="search" placeholder="Search mail">
+                                                    <input class="form-control" type="text" id="search" name="search" placeholder="Search...">
                                                 </div>
                                             </form>
                                         </li>
@@ -55,28 +55,35 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Title</th>
-                                            <th>Slug</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Title</th>
+                                            <th class="text-center">Slug</th>
+                                            <th class="text-center">Status</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($posts as $post)
+                                        @foreach ($posts as $key => $post)
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                                <td class="text-center">{{ $posts->firstItem() + $key }}</td>
                                                 <td>{{ $post->title }}</td>
                                                 <td>{{ $post->slug }}</td>
-                                                <td><span class="badge badge-primary">{{ $post->status }}</span></td>
+                                                <td class="text-center"><span class="badge badge-primary">{{ $post->status }}</span></td>
                                                 <td>
-                                                    <a href="">Delete</a>
+                                                    <div class="text-center">
+                                                        <a href="{{ route('post.edit', ['post' => $post->id]) }}" class="text-primary p-2">Edit</a>
+                                                        <a href="" class="text-info p-2">Detail</a>
+                                                        <a href="" class="text-danger p-2">Delete</a>
+                                                    </div>
                                                 </td>
                                             </tr>
 
                                         @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="mt-2">
+                                {{ $posts->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                     </div>
