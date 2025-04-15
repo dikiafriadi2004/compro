@@ -26,7 +26,7 @@
 @section('content')
     <div class="theme-body">
         <div class="custom-container codexedit-profile">
-            <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.update', ['post' => $data->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group mb-2">
@@ -107,12 +107,12 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                             <div class="text-center">
-                                                <img id="thumbnail-preview" src="#" alt=""
-                                                    class="img-fluid mt-3" />
+                                                @isset($data->thumbnail)
+                                                    <img id="thumbnail-preview" src="{{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION').'/'.$data->thumbnail) }}" alt=""
+                                                        class="img-fluid mt-3" />
+                                                @endisset
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>

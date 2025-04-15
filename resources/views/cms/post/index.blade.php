@@ -34,14 +34,17 @@
                             <div class="row">
 
                                 <div class="mailreact-right">
-                                        <a href="{{ route('post.create') }}" class="btn btn-secondary float-end mb-2">Add Post</a>
+                                    <a href="{{ route('post.create') }}" class="btn btn-secondary float-end mb-2">Add
+                                        Post</a>
                                     <ul class="mailreact-list">
                                         <li>
                                             <form action="{{ route('post.index') }}" method="GET">
                                                 <div class="input-group">
-                                                    <div class="input-group-text cdxappsearch-toggle"><i data-feather="search"></i>
+                                                    <div class="input-group-text cdxappsearch-toggle"><i
+                                                            data-feather="search"></i>
                                                     </div>
-                                                    <input class="form-control" type="text" id="search" name="search" placeholder="Search...">
+                                                    <input class="form-control" type="text" id="search" name="search"
+                                                        placeholder="Search...">
                                                 </div>
                                             </form>
                                         </li>
@@ -68,16 +71,25 @@
                                                 <td class="text-center">{{ $posts->firstItem() + $key }}</td>
                                                 <td>{{ $post->title }}</td>
                                                 <td>{{ $post->slug }}</td>
-                                                <td class="text-center"><span class="badge badge-primary">{{ $post->status }}</span></td>
+                                                <td class="text-center"><span
+                                                        class="badge badge-primary">{{ $post->status }}</span></td>
                                                 <td>
                                                     <div class="text-center">
-                                                        <a href="{{ route('post.edit', ['post' => $post->id]) }}" class="text-primary p-2">Edit</a>
-                                                        <a href="" class="text-info p-2">Detail</a>
-                                                        <a href="" class="text-danger p-2">Delete</a>
+                                                        <form action="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <a href="{{ route('post.edit', ['post' => $post->id]) }}"
+                                                                class="text-primary p-2">Edit</a>
+                                                            <a href="" class="text-info p-2">Detail</a>
+                                                            <a href="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                                onclick="event.preventDefault(); this.closest('form').submit();"
+                                                                class="text-danger p-2">Delete</a>
+                                                        </form>
+
                                                     </div>
                                                 </td>
                                             </tr>
-
                                         @endforeach
                                     </tbody>
                                 </table>

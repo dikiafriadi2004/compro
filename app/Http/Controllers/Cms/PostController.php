@@ -94,16 +94,61 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'content' => 'required',
+            'thumbnail' => 'image|mimes:png,jpg,jpeg|max:2024'
+        ],[
+            'title.required' => 'Title a field is required',
+            'description.required' => 'Description a field is required',
+            'content.required' => 'Content a field is required',
+            'thumbnail.image' => 'Thumbnail just a picture',
+            'thumbnail.mimes' => "Extension just a JPEG, JPG, dan PNG",
+            'thumbnail.max' => 'The maximum size for thumbnails is 2Mb',
+        ]);
+
+        if ($request->hasFile('thumbnail')){
+
+            if(isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')). "/" . $post->thumbnail)){
+                unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')). "/" . $post->thumbnail);
+            }
+
+            $image = $request->file('thumbnail');
+            $image_name = time() . "_" . $image->getClientOriginalName();
+            $destination_path = public_path(getenv('CUSTOM_THUMBNAIL_LOCATION'));
+            $image->move($destination_path, $image_name);
+        }
+
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'content' => $request->content,
+            'status' => $request->status,
+            'thumbnail' => isset($image_name) ? $image_name : $post->thumbnail,
+            'slug' => Str::slug($request->title),
+            'user_id' => Auth::user()->id,
+        ];
+
+        Post::where('id', $post->id)->update($data);
+
+        return redirect()->route('post.index')->with('success', 'Post has been updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        if(isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')). "/" . $post->thumbnail)){
+            unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')). "/" . $post->thumbnail);
+        }
+
+        Post::where('id', $post->id)->delete();
+
+        return redirect()->route('post.index')->with('success', 'Post has been deleted');
+
     }
 }
