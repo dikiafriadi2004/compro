@@ -1,7 +1,7 @@
 @extends('cms.layouts.app')
 
 @section('title')
-    Posts List
+    Categories List
 @endsection
 
 @push('css')
@@ -11,11 +11,11 @@
     <div class="codex-breadcrumb">
         <div class="row">
             <div class="col-4">
-                <h1 class="fs-5">Posts List</h1>
+                <h1 class="fs-5">Categories List</h1>
             </div>
             <div class="col-8">
                 <ul class="breadcrumb justify-content-end mb-0">
-                    <li class="breadcrumb-item"><a href="index.html">Post List</a></li>
+                    <li class="breadcrumb-item"><a href="index.html">Categories List</a></li>
                     {{-- <li class="breadcrumb-item"><a class="text-light" href="#!">Default</a></li> --}}
                 </ul>
             </div>
@@ -24,21 +24,44 @@
 @endsection
 
 @section('content')
-    <div class="theme-body common-dash" data-simplebar>
-        <div class="custom-container">
+    <div class="theme-body">
+        <div class="custom-container codexedit-profile">
             <div class="row">
-                <div class="col-xxl-12">
+                <div class="col-xl-4 col-md-5 cdx-xl-40">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Add Category</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-group">
+                                <form action="" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label class="form-label">Category</label>
+                                        <input class="form-control @error('name') is-invalid @enderror" name="name"
+                                            type="text" placeholder="Name Category" value="{{ old('name') }}">
+                                        @error('name')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group mb-0">
+                                        <button class="btn btn-primary" type="submit">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-md-7 cdx-xl-60">
                     <div class="card project-summarytbl">
                         <div class="card-header">
-                            <h4>Posts List</h4>
+                            <h4>Categories</h4>
                             <div class="row">
 
                                 <div class="mailreact-right">
-                                    <a href="{{ route('post.create') }}" class="btn btn-secondary float-end mb-2">Add
-                                        Post</a>
                                     <ul class="mailreact-list">
                                         <li>
-                                            <form action="{{ route('post.index') }}" method="GET">
+                                            <form action="{{ route('categories.index') }}" method="GET">
                                                 <div class="input-group">
                                                     <div class="input-group-text cdxappsearch-toggle"><i
                                                             data-feather="search"></i>
@@ -59,34 +82,29 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th class="text-center">Title</th>
+                                            <th class="text-center">Name Category</th>
                                             <th class="text-center">Slug</th>
-                                            <th class="text-center">Category</th>
-                                            <th class="text-center">Status</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($posts as $key => $post)
+                                        @foreach ($categories as $key => $category)
                                             <tr>
-                                                <td class="text-center">{{ $posts->firstItem() + $key }}</td>
-                                                <td>{{ $post->title }}</td>
-                                                <td>{{ $post->slug }}</td>
-                                                <td>{{ $post->category_name }}</td>
-                                                <td class="text-center"><span
-                                                        class="badge badge-primary">{{ $post->status }}</span></td>
+                                                <td class="text-center">{{ $categories->firstItem() + $key }}</td>
+                                                <td>{{ $category->name }}</td>
+                                                <td>{{ $category->slug }}</td>
                                                 <td>
                                                     <div class="text-center">
-                                                        <form action="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                        <form
+                                                            action="{{ route('categories.destroy', ['category' => $category->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            <a href="{{ route('post.edit', ['post' => $post->id]) }}"
-                                                                class="text-primary p-2">Edit</a>
-                                                            <a href="" class="text-info p-2">Detail</a>
-                                                            <a href="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                            <button class="btn text-primary p-2" type="button"
+                                                            data-bs-toggle="modal" data-bs-target="#modalCategory{{ $category->id }}">Edit</button>
+                                                            <a href="{{ route('categories.destroy', ['category' => $category->id]) }}"
                                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="text-danger p-2">Delete</a>
+                                                                class="btn text-danger p-2">Delete</a>
                                                         </form>
 
                                                     </div>
@@ -97,7 +115,7 @@
                                 </table>
                             </div>
                             <div class="mt-2">
-                                {{ $posts->links('pagination::bootstrap-5') }}
+                                {{ $categories->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                     </div>
@@ -105,6 +123,8 @@
             </div>
         </div>
     </div>
+
+    @include('cms.category.edit')
 @endsection
 
 @push('js')

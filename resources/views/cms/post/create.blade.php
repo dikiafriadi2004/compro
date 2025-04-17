@@ -16,7 +16,7 @@
             <div class="col-8">
                 <ul class="breadcrumb justify-content-end mb-0">
                     <li class="breadcrumb-item"><a href="index.html">Post</a></li>
-                    <li class="breadcrumb-item"><a class="text-light" href="#!">Create Post</a></li>
+                    <li class="breadcrumb-item"><a class="text-light" href="{{ route('post.index') }}">Create Post</a></li>
                 </ul>
             </div>
         </div>
@@ -42,15 +42,16 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Title</label>
-                                    <input class="form-control @error('title') is-invalid @enderror" name="title" type="text"
-                                        placeholder="Title">
+                                    <input class="form-control @error('title') is-invalid @enderror" name="title"
+                                        type="text" placeholder="Title">
                                     @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Description</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Enter Description"></textarea>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description"
+                                        placeholder="Enter Description"></textarea>
                                     @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -74,21 +75,28 @@
                                 <div class="info-group">
                                     <div class="mb-2">
                                         <label class="form-label">Status</label>
-                                        <select class="form-control hidesearch @error('status') is-invalid @enderror" name="status">
+                                        <select class="form-control hidesearch @error('status') is-invalid @enderror"
+                                            name="status">
                                             <option value="" hidden>Pilih</option>
                                             <option value="publish">Publish</option>
                                             <option value="draft">Draft</option>
                                         </select>
                                         @error('status')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Categories</label>
-                                        <select class="form-control hidesearch" name="category">
-                                            <option>Berita</option>
-                                            <option>Promo</option>
+                                        <select class="form-control hidesearch @error('category_id') is-invalid @enderror"
+                                            name="category_id">
+                                            <option selected disabled>--- Select Category ---</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('category_id')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +133,7 @@
 
 @push('js')
     <script type="text/javascript">
-    // Preview Thumbnail
+        // Preview Thumbnail
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

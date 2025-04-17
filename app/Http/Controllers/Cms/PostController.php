@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Cms;
 
 use App\Models\CMS\Post;
 use Illuminate\Support\Str;
+use App\Models\CMS\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,11 +19,17 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $search = $request->search;
-        $posts = Post::where('user_id', $user->id)->where(function($query) use ($search){
-            if($search){
-                $query->where('title', 'like', "%{$search}%")->orWhere('content', 'like', "%{$search}%");
-            }
-        })->orderBy('id', 'desc')->paginate(10)->withQueryString();
+
+        $posts = DB::table('posts')
+            ->join('categories', 'posts.category_id', '=', 'categories.id')
+            ->select('posts.*', 'categories.name as category_name')
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('posts.title', 'like', '%' . $search . '%')
+                        ->orWhere('categories.name', 'like', '%' . $search . '%')
+                        ->orWhere('posts.description', 'like', '%' . $search . '%');
+                });
+            })->orderBy('id', 'desc')->paginate(10)->withQueryString();
         return view('cms.post.index', compact('posts'));
     }
 
@@ -30,7 +38,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('cms.post.create');
+        $categories = Category::orderByDesc('id')->get();
+        return view('cms.post.create', compact('categories'));
     }
 
     /**
@@ -42,11 +51,13 @@ class PostController extends Controller
             'title' => 'required',
             'description' => 'required',
             'content' => 'required',
+            'category_id' => 'required',
             'thumbnail' => 'image|mimes:png,jpg,jpeg|max:2024'
         ],[
             'title.required' => 'Title a field is required',
             'description.required' => 'Description a field is required',
             'content.required' => 'Content a field is required',
+            'category_id.required' => 'Category a field is required',
             'thumbnail.image' => 'Thumbnail just a picture',
             'thumbnail.mimes' => "Extension just a JPEG, JPG, dan PNG",
             'thumbnail.max' => 'The maximum size for thumbnails is 2Mb',
@@ -64,6 +75,7 @@ class PostController extends Controller
             'description' => $request->description,
             'content' => $request->content,
             'status' => $request->status,
+            'category_id' => $request->category_id,
             'thumbnail' => isset($image_name) ? $image_name : null,
             'slug' => Str::slug($request->title),
             'user_id' => Auth::user()->id,
@@ -87,8 +99,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $data = $post;
-        return view('cms.post.edit', compact('data'));
+        $categories = Category::orderByDesc('id')->get();
+        return view('cms.post.edit', compact('post','categories'));
     }
 
     /**
@@ -100,11 +112,13 @@ class PostController extends Controller
             'title' => 'required',
             'description' => 'required',
             'content' => 'required',
+            'category_id.required' => 'Category a field is required',
             'thumbnail' => 'image|mimes:png,jpg,jpeg|max:2024'
         ],[
             'title.required' => 'Title a field is required',
             'description.required' => 'Description a field is required',
             'content.required' => 'Content a field is required',
+            'category_id.required' => 'Category a field is required',
             'thumbnail.image' => 'Thumbnail just a picture',
             'thumbnail.mimes' => "Extension just a JPEG, JPG, dan PNG",
             'thumbnail.max' => 'The maximum size for thumbnails is 2Mb',
@@ -127,6 +141,7 @@ class PostController extends Controller
             'description' => $request->description,
             'content' => $request->content,
             'status' => $request->status,
+            'category_id' => $request->category_id,
             'thumbnail' => isset($image_name) ? $image_name : $post->thumbnail,
             'slug' => Str::slug($request->title),
             'user_id' => Auth::user()->id,

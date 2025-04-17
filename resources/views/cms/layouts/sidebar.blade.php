@@ -21,7 +21,7 @@
                 </a>
                 <ul class="submenu-list">
                     <li><a href="{{ route('post.index') }}">Posts</a></li>
-                    <li><a href="blog-detail.html">Categories</a></li>
+                    <li><a href="{{ route('categories.index') }}">Categories</a></li>
                 </ul>
             </li>
         </ul>

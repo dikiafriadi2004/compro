@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->longText('description');
             $table->longText('content');
+
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
             $table->string('thumbnail');
             $table->enum('status', ['draft', 'publish'])->default('draft');
 

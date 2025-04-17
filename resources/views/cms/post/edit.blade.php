@@ -26,7 +26,7 @@
 @section('content')
     <div class="theme-body">
         <div class="custom-container codexedit-profile">
-            <form action="{{ route('post.update', ['post' => $data->id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('post.update', ['post' => $post->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group mb-2">
@@ -43,15 +43,16 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Title</label>
-                                    <input class="form-control @error('title') is-invalid @enderror" name="title" type="text"
-                                        placeholder="Title" value="{{ old('title', $data->title) }}">
+                                    <input class="form-control @error('title') is-invalid @enderror" name="title"
+                                        type="text" placeholder="Title" value="{{ old('title', $post->title) }}">
                                     @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Description</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Enter Description">{{ old('description', $data->description) }}</textarea>
+                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description"
+                                        placeholder="Enter Description">{{ old('description', $post->description) }}</textarea>
                                     @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -59,7 +60,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Content</label>
-                                    <textarea class="form-control @error('content') is-invalid @enderror" name="content" placeholder="Enter Content">{!! old('content', $data->content) !!}</textarea>
+                                    <textarea class="form-control @error('content') is-invalid @enderror" name="content" placeholder="Enter Content">{!! old('content', $post->content) !!}</textarea>
                                     @error('content')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -75,20 +76,28 @@
                                 <div class="info-group">
                                     <div class="mb-2">
                                         <label class="form-label">Status</label>
-                                        <select class="form-control hidesearch @error('status') is-invalid @enderror" name="status">
+                                        <select class="form-control hidesearch @error('status') is-invalid @enderror"
+                                            name="status">
                                             <option value="" hidden>Pilih</option>
-                                            <option value="publish" {{ (old('status', $data->status) == 'publish') ? 'selected' : '' }}>Publish</option>
-                                            <option value="draft" {{ (old('status', $data->status) == 'draft') ? 'selected' : '' }}>Draft</option>
+                                            <option value="publish"
+                                                {{ old('status', $post->status) == 'publish' ? 'selected' : '' }}>Publish
+                                            </option>
+                                            <option value="draft"
+                                                {{ old('status', $post->status) == 'draft' ? 'selected' : '' }}>Draft
+                                            </option>
                                         </select>
                                         @error('status')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label">Categories</label>
-                                        <select class="form-control hidesearch" name="category">
-                                            <option>Berita</option>
-                                            <option>Promo</option>
+                                        <select class="form-control hidesearch" name="category_id">
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -107,9 +116,10 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                             <div class="text-center">
-                                                @isset($data->thumbnail)
-                                                    <img id="thumbnail-preview" src="{{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION').'/'.$data->thumbnail) }}" alt=""
-                                                        class="img-fluid mt-3" />
+                                                @isset($post->thumbnail)
+                                                    <img id="thumbnail-preview"
+                                                        src="{{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION') . '/' . $post->thumbnail) }}"
+                                                        alt="" class="img-fluid mt-3" />
                                                 @endisset
                                             </div>
                                         </div>
@@ -126,7 +136,7 @@
 
 @push('js')
     <script type="text/javascript">
-    // Preview Thumbnail
+        // Preview Thumbnail
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
