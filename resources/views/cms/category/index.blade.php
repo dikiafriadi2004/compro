@@ -101,10 +101,10 @@
                                                             @csrf
                                                             @method('delete')
                                                             <button class="btn text-primary p-2" type="button"
-                                                            data-bs-toggle="modal" data-bs-target="#modalCategory{{ $category->id }}">Edit</button>
+                                                            data-bs-toggle="modal" data-bs-target="#modalCategory{{ $category->id }}"><i class="fa fa-edit"></i></button>
                                                             <a href="{{ route('categories.destroy', ['category' => $category->id]) }}"
                                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="btn text-danger p-2">Delete</a>
+                                                                class="btn text-danger p-2"><i class="fa fa-trash"></i></a>
                                                         </form>
 
                                                     </div>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->longText('description');
+            $table->longText('meta_description');
             $table->longText('content');
 
             $table->unsignedBigInteger('category_id');
@@ -23,6 +23,8 @@ return new class extends Migration
 
             $table->string('thumbnail');
             $table->enum('status', ['draft', 'publish'])->default('draft');
+
+            $table->string('meta_keyword')->nullable();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

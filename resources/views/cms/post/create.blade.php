@@ -65,6 +65,15 @@
                                     @enderror
                                 </div>
 
+                                <div class="form-group">
+                                    <label class="form-label">Meta Keyword</label>
+                                    <input class="form-control @error('meta_keyword') is-invalid @enderror" name="meta_keyword"
+                                        type="text" placeholder="Meta Keyword">
+                                    @error('meta_keyword')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                             </div>
                         </div>
                     </div>

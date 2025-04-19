@@ -5,8 +5,7 @@
             <div class="search-bar">
                 <div class="form-group mb-0">
                     <div class="input-group">
-                        <input class="form-control" type="text" value="" placeholder="Search Here....."><span
-                            class="input-group-text"><i data-feather="search"></i></span>
+
                     </div>
                 </div>
             </div>
@@ -18,19 +17,23 @@
                         <div class="user-icon"><img class="img-fluid rounded-50"
                                 src="{{ asset('backend/assets/images/avtar/3.jpg') }}" alt="logo"></div>
                         <div class="media-body">
-                            <h6>Thomas Vactom</h6><span class="text-light">Web designer</span>
+                            <h6>{{ Auth::user()->name }}</h6><span
+                                class="text-light">{{ Auth::user()->username }}</span>
                         </div>
                     </div>
                     <div class="hover-dropdown navprofile-drop">
                         <ul>
-                            <li><a href="profile.html"><i class="me-2 align-middle"
-                                        data-feather="user"></i>profile</a></li>
-                            <li><a href="email-inbox.html"><i class="me-2 align-middle"
-                                        data-feather="mail"></i>inbox</a></li>
-                            <li><a href="user-edit.html"><i class="me-2 align-middle"
-                                        data-feather="settings"></i>setting</a></li>
-                            <li><a href="login.html"><i class="me-2 align-middle" data-feather="log-out"></i>log
-                                    out</a></li>
+                            <li><a href="profile.html"><i class="me-2 align-middle" data-feather="user"></i>profile</a>
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); this.closest('form').submit();"><i
+                                            class="me-2 align-middle" data-feather="log-out"></i>log
+                                        out</a>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </li>

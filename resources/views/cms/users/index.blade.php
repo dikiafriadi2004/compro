@@ -1,7 +1,7 @@
 @extends('cms.layouts.app')
 
 @section('title')
-    Posts List
+    Users List
 @endsection
 
 @push('css')
@@ -11,11 +11,11 @@
     <div class="codex-breadcrumb">
         <div class="row">
             <div class="col-4">
-                <h1 class="fs-5">Posts List</h1>
+                <h1 class="fs-5">Users List</h1>
             </div>
             <div class="col-8">
                 <ul class="breadcrumb justify-content-end mb-0">
-                    <li class="breadcrumb-item"><a href="index.html">Post List</a></li>
+                    <li class="breadcrumb-item"><a href="index.html">Users List</a></li>
                     {{-- <li class="breadcrumb-item"><a class="text-light" href="#!">Default</a></li> --}}
                 </ul>
             </div>
@@ -30,15 +30,14 @@
                 <div class="col-xxl-12">
                     <div class="card project-summarytbl">
                         <div class="card-header">
-                            <h4>Posts List</h4>
+                            <h4>Users List</h4>
                             <div class="row">
 
                                 <div class="mailreact-right">
-                                    <a href="{{ route('post.create') }}" class="btn btn-secondary float-end mb-2">Add
-                                        Post</a>
+                                    <a href="{{ route('users.create') }}" class="btn btn-secondary float-end mb-2">Register</a>
                                     <ul class="mailreact-list">
                                         <li>
-                                            <form action="{{ route('post.index') }}" method="GET">
+                                            <form action="{{ route('users.index') }}" method="GET">
                                                 <div class="input-group">
                                                     <div class="input-group-text cdxappsearch-toggle"><i
                                                             data-feather="search"></i>
@@ -59,34 +58,31 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th class="text-center">Title</th>
-                                            <th class="text-center">Slug</th>
-                                            <th class="text-center">Category</th>
-                                            <th class="text-center">Status</th>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Username</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($posts as $key => $post)
+                                        @foreach ($users as $key => $user)
                                             <tr>
-                                                <td class="text-center">{{ $posts->firstItem() + $key }}</td>
-                                                <td>{{ $post->title }}</td>
-                                                <td>{{ $post->slug }}</td>
-                                                <td>{{ $post->category_name }}</td>
-                                                <td class="text-center"><span
-                                                        class="badge badge-primary">{{ $post->status }}</span></td>
+                                                <td class="text-center">{{ $users->firstItem() + $key }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->username }}</td>
                                                 <td>
                                                     <div class="text-center">
-                                                        <form action="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                        <form action="{{ route('users.destroy', ['user' => $user->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            <a href="{{ route('post.edit', ['post' => $post->id]) }}"
-                                                                class="text-primary p-2"><i class="fa fa-edit"></i></a>
+                                                            {{-- <a href="{{ route('users.edit', ['post' => $user->id]) }}"
+                                                                class="text-primary p-2"><i class="fa fa-edit"></i></a> --}}
                                                             <a href="" class="text-info p-2"><i class="fa fa-eye"></i></a>
-                                                            <a href="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                            {{-- <a href="{{ route('users.destroy', ['post' => $user->id]) }}"
                                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a>
+                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a> --}}
                                                         </form>
 
                                                     </div>
@@ -97,7 +93,7 @@
                                 </table>
                             </div>
                             <div class="mt-2">
-                                {{ $posts->links('pagination::bootstrap-5') }}
+                                {{ $users->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                     </div>
