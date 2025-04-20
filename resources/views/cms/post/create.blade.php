@@ -49,6 +49,18 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label class="form-label">Slug</label>
+                                    <input class="form-control @error('slug') is-invalid @enderror" id="myInput"
+                                        name="slug" type="text" placeholder="Slug">
+
+                                    @error('slug')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+
+                                    <a href="#" id="toggleLink">Edit</a>
+
+                                </div>
+                                <div class="form-group">
                                     <label class="form-label">Description</label>
                                     <textarea class="form-control @error('description') is-invalid @enderror" name="description"
                                         placeholder="Enter Description"></textarea>
@@ -67,8 +79,8 @@
 
                                 <div class="form-group">
                                     <label class="form-label">Meta Keyword</label>
-                                    <input class="form-control @error('meta_keyword') is-invalid @enderror" name="meta_keyword"
-                                        type="text" placeholder="Meta Keyword">
+                                    <input class="form-control @error('meta_keyword') is-invalid @enderror"
+                                        name="meta_keyword" type="text" placeholder="Meta Keyword">
                                     @error('meta_keyword')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -154,5 +166,24 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        // slug
+        document.addEventListener("DOMContentLoaded", function() {
+            const input = document.getElementById("myInput");
+            const toggleLink = document.getElementById("toggleLink");
+
+            toggleLink.addEventListener("click", function(event) {
+                event.preventDefault(); // Supaya href="#" nggak scroll ke atas
+
+                if (input.disabled) {
+                    input.disabled = false;
+                    toggleLink.textContent = "Close";
+                    input.focus();
+                } else {
+                    input.disabled = true;
+                    toggleLink.textContent = "Edit";
+                }
+            });
+        });
     </script>
 @endpush
