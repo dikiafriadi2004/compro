@@ -73,8 +73,14 @@
                                                 <td>{{ $post->title }}</td>
                                                 <td>{{ $post->slug }}</td>
                                                 <td>{{ $post->category_name }}</td>
-                                                <td class="text-center"><span
-                                                        class="badge badge-primary">{{ $post->status }}</span></td>
+                                                <td class="text-center">
+                                                    @if ($post->status == 'publish')
+                                                    <span class="badge badge-primary">{{ $post->status }}</span>
+                                                    @else
+                                                    <span class="badge badge-danger">{{ $post->status }}</span>
+                                                    @endif
+                                                    
+                                                    </td>
                                                 <td>
                                                     <div class="text-center">
                                                         <form action="{{ route('post.destroy', ['post' => $post->id]) }}"

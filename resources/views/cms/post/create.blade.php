@@ -42,29 +42,25 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Title</label>
-                                    <input class="form-control @error('title') is-invalid @enderror" name="title"
-                                        type="text" placeholder="Title">
+                                    <input class="form-control @error('title') is-invalid @enderror" id="title"
+                                        name="title" type="text" placeholder="Title" value="">
                                     @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Slug</label>
-                                    <input class="form-control @error('slug') is-invalid @enderror" id="myInput"
+                                    <input class="form-control @error('slug') is-invalid @enderror" id="slug"
                                         name="slug" type="text" placeholder="Slug">
-
                                     @error('slug')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-
-                                    <a href="#" id="toggleLink">Edit</a>
-
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Description</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description"
+                                    <textarea class="form-control @error('meta_description') is-invalid @enderror" name="meta_description"
                                         placeholder="Enter Description"></textarea>
-                                    @error('description')
+                                    @error('meta_description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
 
@@ -167,23 +163,22 @@
             }
         }
 
-        // slug
-        document.addEventListener("DOMContentLoaded", function() {
-            const input = document.getElementById("myInput");
-            const toggleLink = document.getElementById("toggleLink");
+        // Generate Slug
+        function createSlug(text) {
+            return text.toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9\s-]/g, '') // Hapus karakter non-alfanumerik
+                .replace(/\s+/g, '-') // Ganti spasi dengan strip
+                .replace(/-+/g, '-'); // Hindari multiple strip
+        }
 
-            toggleLink.addEventListener("click", function(event) {
-                event.preventDefault(); // Supaya href="#" nggak scroll ke atas
-
-                if (input.disabled) {
-                    input.disabled = false;
-                    toggleLink.textContent = "Close";
-                    input.focus();
-                } else {
-                    input.disabled = true;
-                    toggleLink.textContent = "Edit";
-                }
+        $(document).ready(function() {
+            $('#title').on('input', function() {
+                const title = $(this).val();
+                const slug = createSlug(title);
+                $('#slug').val(slug);
             });
         });
+
     </script>
 @endpush

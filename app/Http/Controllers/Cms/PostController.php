@@ -47,15 +47,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required',
-            'description' => 'required',
+            'slug' => 'required|string|max:255|unique:posts,slug,',
+            'meta_description' => 'required',
             'content' => 'required',
             'category_id' => 'required',
             'thumbnail' => 'image|mimes:png,jpg,jpeg|max:2024'
         ],[
             'title.required' => 'Title a field is required',
-            'description.required' => 'Description a field is required',
+            'slug.required' => 'Slug a field is required',
+            'slug.unique' => 'Slug already exists',
+            'meta_description.required' => 'Description a field is required',
             'content.required' => 'Content a field is required',
             'category_id.required' => 'Category a field is required',
             'thumbnail.image' => 'Thumbnail just a picture',
@@ -72,12 +76,12 @@ class PostController extends Controller
 
         $post = [
             'title' => $request->title,
-            'description' => $request->description,
+            'slug' => $request->slug,
+            'meta_description' => $request->meta_description,
             'content' => $request->content,
             'status' => $request->status,
             'category_id' => $request->category_id,
             'thumbnail' => isset($image_name) ? $image_name : null,
-            'slug' => Str::slug($request->title),
             'user_id' => Auth::user()->id,
         ];
 
@@ -110,13 +114,16 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'description' => 'required',
+            'slug' => 'required|string|max:255|unique:posts,slug,' . $post->id,
+            'meta_description' => 'required',
             'content' => 'required',
             'category_id.required' => 'Category a field is required',
             'thumbnail' => 'image|mimes:png,jpg,jpeg|max:2024'
         ],[
             'title.required' => 'Title a field is required',
-            'description.required' => 'Description a field is required',
+            'slug.required' => 'Slug a field is required',
+            'slug.unique' => 'Slug already exists',
+            'meta_description.required' => 'Description a field is required',
             'content.required' => 'Content a field is required',
             'category_id.required' => 'Category a field is required',
             'thumbnail.image' => 'Thumbnail just a picture',
@@ -136,16 +143,20 @@ class PostController extends Controller
             $image->move($destination_path, $image_name);
         }
 
+        // $slug = $this->generateUniqueSlug($request->title);
+
         $data = [
             'title' => $request->title,
-            'description' => $request->description,
+            'slug' => $request->slug,
+            'meta_description' => $request->meta_description,
             'content' => $request->content,
             'status' => $request->status,
             'category_id' => $request->category_id,
             'thumbnail' => isset($image_name) ? $image_name : $post->thumbnail,
-            'slug' => Str::slug($request->title),
             'user_id' => Auth::user()->id,
         ];
+
+        
 
         Post::where('id', $post->id)->update($data);
 
@@ -166,4 +177,18 @@ class PostController extends Controller
         return redirect()->route('post.index')->with('success', 'Post has been deleted');
 
     }
+
+    // private function generateUniqueSlug($title)
+    // {
+    //     $slug = Str::slug($title);
+    //     $originalSlug = $slug;
+    //     $count = 1;
+
+    //     while (Post::where('slug', $slug)->exists()) {
+    //         $slug = $originalSlug . '-' . $count;
+    //         $count++;
+    //     }
+
+    //     return $slug;
+    // }
 }

@@ -1,7 +1,7 @@
 @extends('cms.layouts.app')
 
 @section('title')
-    Create Post
+    Edit Post
 @endsection
 
 @push('css')
@@ -11,12 +11,12 @@
     <div class="codex-breadcrumb">
         <div class="row">
             <div class="col-4">
-                <h1 class="fs-5">Create Post</h1>
+                <h1 class="fs-5">Edit Post</h1>
             </div>
             <div class="col-8">
                 <ul class="breadcrumb justify-content-end mb-0">
                     <li class="breadcrumb-item"><a href="index.html">Post</a></li>
-                    <li class="breadcrumb-item"><a class="text-light" href="#!">Create Post</a></li>
+                    <li class="breadcrumb-item"><a class="text-light" href="#!">Edit Post</a></li>
                 </ul>
             </div>
         </div>
@@ -38,22 +38,31 @@
                     <div class="col-xl-8 col-md-7 cdx-xl-60">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Create Post</h4>
+                                <h4>Edit Post</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Title</label>
-                                    <input class="form-control @error('title') is-invalid @enderror" name="title"
+                                    <input class="form-control @error('title') is-invalid @enderror" id="title" name="title"
                                         type="text" placeholder="Title" value="{{ old('title', $post->title) }}">
                                     @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label class="form-label">Slug</label>
+                                    <input class="form-control @error('slug') is-invalid @enderror" id="slug"
+                                        name="slug" type="text" placeholder="Slug"
+                                        value="{{ old('slug', $post->slug) }}">
+                                    @error('slug')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label class="form-label">Description</label>
-                                    <textarea class="form-control @error('description') is-invalid @enderror" name="description"
-                                        placeholder="Enter Description">{{ old('description', $post->description) }}</textarea>
-                                    @error('description')
+                                    <textarea class="form-control @error('meta_description') is-invalid @enderror" name="meta_description"
+                                        placeholder="Enter Description">{{ old('meta_description', $post->meta_description) }}</textarea>
+                                    @error('meta_description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
 
@@ -68,8 +77,9 @@
 
                                 <div class="form-group">
                                     <label class="form-label">Meta Keyword</label>
-                                    <input class="form-control @error('meta_keyword') is-invalid @enderror" name="meta_keyword"
-                                        type="text" placeholder="Meta Keyword" value="{{ old('meta_keyword', $post->meta_keyword) }}">
+                                    <input class="form-control @error('meta_keyword') is-invalid @enderror"
+                                        name="meta_keyword" type="text" placeholder="Meta Keyword"
+                                        value="{{ old('meta_keyword', $post->meta_keyword) }}">
                                     @error('meta_keyword')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -157,5 +167,22 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        // Generate Slug
+        function createSlug(text) {
+            return text.toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9\s-]/g, '') // Hapus karakter non-alfanumerik
+                .replace(/\s+/g, '-') // Ganti spasi dengan strip
+                .replace(/-+/g, '-'); // Hindari multiple strip
+        }
+
+        $(document).ready(function() {
+            $('#title').on('input', function() {
+                const title = $(this).val();
+                const slug = createSlug(title);
+                $('#slug').val(slug);
+            });
+        });
     </script>
 @endpush
