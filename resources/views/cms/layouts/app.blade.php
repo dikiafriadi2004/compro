@@ -13,8 +13,8 @@
     <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
 
     <!-- shortcut icon-->
-    <link rel="icon" href="{{ asset('backend/assets/images/logo/logo.png') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('backend/assets/images/logo/logo.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('backend/assets/images/logo/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('backend/assets/images/logo/favicon.png') }}" type="image/x-icon">
     <!-- Fonts css  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
