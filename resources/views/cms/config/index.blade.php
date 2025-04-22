@@ -31,7 +31,7 @@ Config Website
                 @method('PUT')
                 <div class="form-group mb-2">
                     <div class="group-btn">
-                        <button class="btn btn-primary" type="submit">Publish</button>
+                        <button class="btn btn-primary" type="submit">Save</button>
                     </div>
                 </div>
                 <div class="row">
@@ -60,18 +60,34 @@ Config Website
                                 <div class="form-group">
                                     <label class="form-label">Favicon</label>
                                     <input class="form-control @error('favicon') is-invalid @enderror" name="favicon"
-                                        type="text" placeholder="favicon" value="{{ $config->favicon }}">
+                                        type="file" onchange="readURL(this);" value="{{ $config->favicon }}">
                                     @error('favicon')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+
+                                    <div class="text-right">
+                                        @isset($config->favicon)
+                                            <img id="favicon-preview"
+                                                src="{{ asset(getenv('CUSTOM_UPLOAD_LOCATION') . '/' . $config->favicon) }}"
+                                                alt="" class="img-fluid mt-3" style="height: 50px; width: auto;" />
+                                        @endisset
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Logo Website</label>
                                     <input class="form-control @error('logo') is-invalid @enderror" name="logo"
-                                        type="text" placeholder="logo" value="{{ $config->logo }}">
+                                        type="file" onchange="getURL(this);" value="{{ $config->logo }}">
                                     @error('logo')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+
+                                    <div class="text-right">
+                                        @isset($config->logo)
+                                            <img id="logo-preview"
+                                                src="{{ asset(getenv('CUSTOM_UPLOAD_LOCATION') . '/' . $config->logo) }}"
+                                                alt="" class="img-fluid mt-3" style="height: 50px; width: auto;" />
+                                        @endisset
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Meta Description</label>
@@ -144,15 +160,26 @@ Config Website
 
 @push('js')
     <script type="text/javascript">
-        // Preview Thumbnail
+        // Preview Favicon
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
-                    $('#thumbnail-preview').attr('src', e.target.result);
+                    $('#favicon-preview').attr('src', e.target.result);
                 }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
+        // Preview Logo
+        function getURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#logo-preview').attr('src', e.target.result);
+                }
                 reader.readAsDataURL(input.files[0]);
             }
         }

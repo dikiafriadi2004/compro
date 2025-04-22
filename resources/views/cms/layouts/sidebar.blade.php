@@ -1,7 +1,6 @@
 <aside class="codex-sidebar">
     <div class="logo-gridwrap codex-brand"><a class="codexbrand-logo d-flex" href="index.html"><img class="img-fluid"
-                src="{{ asset('backend/assets/images/logo/logo.png') }}" alt="theeme-logo"><span
-                class="text-white fs-3 align-middle ms-2 fw-semibold">Rohi</span></a>
+                src="{{ asset('backend/assets/images/logo/logo.png') }}" style="height: 40px; width: auto" alt="theeme-logo"></a>
         <div class="sidebar-action"><i data-feather="grid"> </i></div>
     </div>
     <div class="codex-menuwrapper">
