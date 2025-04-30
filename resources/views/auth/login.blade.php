@@ -9,8 +9,7 @@
         <div class="codex-authbox">
             <div class="auth-header">
                 <div class="codex-brand"><a href="index.html"><img class="img-fluid light-logo"
-                            src="{{ asset('backend/assets/images/logo/logo.png') }}" alt=""><span
-                            class="fs-2 align-middle ms-2 fw-semibold">Rohi</span></a></div>
+                            src="{{ asset('backend/assets/images/logo/logo.png') }}" alt="" style="height: 35px; width: auto;"></a></div>
                 <h3>welcome to CMS Konter Digital</h3>
             </div>
             @if ($errors->any())

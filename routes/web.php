@@ -3,6 +3,7 @@
 use App\Http\Controllers\Cms\CategoryController;
 use App\Http\Controllers\Cms\ConfigController;
 use App\Http\Controllers\Cms\PostController;
+use App\Http\Controllers\Cms\RoleController;
 use App\Http\Controllers\Cms\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::middleware('auth')->group(function () {
         // Config
         Route::get('/config', [ConfigController::class, 'edit'])->name('config.edit');
         Route::put('/config', [ConfigController::class, 'update'])->name('config.update');
+
+        // Roles
+        Route::resource('/roles', RoleController::class);
     });
 
 });
