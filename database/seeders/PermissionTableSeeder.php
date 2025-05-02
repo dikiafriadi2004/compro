@@ -33,11 +33,11 @@ class PermissionTableSeeder extends Seeder
                 // Super Admin
                 $superAdminPermission[] = $permission;
                 // Admin
-                if (in_array($label, ['manage posts', 'manage categories'])) {
+                if (in_array($label, ['Manage Posts', 'Manage Categories'])) {
                     $adminPermission[] = $permission;
                 }
                 // Editor
-                if (in_array($label, ['manage posts'])) {
+                if (in_array($label, ['Manage Posts'])) {
                     $editorPermission[] = $permission;
                 }
             }

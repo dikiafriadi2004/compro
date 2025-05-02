@@ -3,40 +3,37 @@
 return [
 
     'authorities' => [
-        'manage posts' => [
-            'post_show',
-            'post_create',
-            'post_update',
-            'post_detail',
-            'post_delete'
+        'Manage Posts' => [
+            'Posts Show',
+            'Posts Create',
+            'Posts Update',
+            'Posts Detail',
+            'Posts Delete'
         ],
-        'manage categories' => [
-            'category_show',
-            'category_create',
-            'category_update',
-            'category_detail',
-            'category_delete'
+        'Manage Categories' => [
+            'Category Show',
+            'Category Create',
+            'Category Update',
+            'Category Detail',
+            'Category Delete'
         ],
-        'manage roles' => [
-            'role_show',
-            'role_create',
-            'role_update',
-            'role_detail',
-            'role_delete'
+        'Manage Roles' => [
+            'Role Show',
+            'Role Create',
+            'Role Update',
+            'Role Detail',
+            'Role Delete'
         ],
-        'manage users' => [
-            'user_show',
-            'user_create',
-            'user_update',
-            'user_detail',
-            'user_delete'
+        'Manage Users' => [
+            'User Show',
+            'User Create',
+            'User Update',
+            'User Detail',
+            'User Delete'
         ],
 
-        'manage config' => [
-            'config_show',
-            'config_create',
-            'config_update',
-            'config_delete'
+        'Manage Config' => [
+            'Config Show'
         ],
     ],
 

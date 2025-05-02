@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cms;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -27,7 +28,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('cms.roles.create', [
+            'authorities' => config('permission.authorities'),
+        ]);
     }
 
     /**
@@ -35,7 +38,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make(
+            $request->all(), [
+                'name' => "required|string|max:50|unique:roles,name",
+                'permissions' => "required"
+            ],
+        );
+
+        if($validator->fails()){
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
     }
 
     /**
@@ -43,7 +55,11 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        return view('cms.roles.detail');
+        return view('cms.roles.detail', [
+            'role' => $role,
+            'authorities' => config('permission.authorities'),
+            'rolePermissions' => $role->permissions->pluck('name')->toArray()
+        ]);
     }
 
     /**
