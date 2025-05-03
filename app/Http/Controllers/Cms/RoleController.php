@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Cms;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\TryCatch;
 
 class RoleController extends Controller
 {
@@ -48,6 +50,23 @@ class RoleController extends Controller
         if($validator->fails()){
             return redirect()->back()->withInput($request->all())->withErrors($validator);
         }
+
+        DB::beginTransaction();
+        try {
+            $role = Role::create([
+                'name' => $request->name
+            ]);
+
+            $role->givePermissionTo($request->permissions);
+
+            return redirect()->route('roles.index')->with('success', 'Role has been created');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput($request->all());
+        } finally {
+            DB::commit();
+        }
+
     }
 
     /**
@@ -67,7 +86,11 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('cms.roles.edit', [
+            'role' => $role,
+            'authorities' => config('permission.authorities'),
+            'permissionChecked' => $role->permissions->pluck('name')->toArray()
+        ]);
     }
 
     /**
@@ -75,7 +98,30 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $validator = Validator::make(
+            $request->all(), [
+                'name' => "required|string|max:50|unique:roles,name," . $role->id,
+                'permissions' => "required"
+            ],
+        );
+
+        if($validator->fails()){
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
+        }
+
+        DB::beginTransaction();
+        try {
+            $role->name = $request->name;
+            $role->syncPermissions($request->permissions);
+            $role->save();
+
+            return redirect()->route('roles.index')->with('success', 'Role has been updated');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput($request->all());
+        } finally {
+            DB::commit();
+        }
     }
 
     /**
@@ -83,6 +129,18 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $role->revokePermissionTo($role->permissions->pluck('name')->toArray());
+            $role->delete();
+
+            return redirect()->route('roles.index')->with('success', 'Role has been deleted');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        } finally {
+            DB::commit();
+        }
+        return redirect()->route('roles.index')->with('success', 'Role has been deleted');
+
     }
 }

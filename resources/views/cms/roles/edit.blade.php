@@ -1,7 +1,7 @@
 @extends('cms.layouts.app')
 
 @section('title')
-    Create Role
+    Edit Role
 @endsection
 
 @push('css')
@@ -11,12 +11,12 @@
     <div class="codex-breadcrumb">
         <div class="row">
             <div class="col-4">
-                <h1 class="fs-5">Create Role</h1>
+                <h1 class="fs-5">Edit Role</h1>
             </div>
             <div class="col-8">
                 <ul class="breadcrumb justify-content-end mb-0">
                     <li class="breadcrumb-item"><a href="index.html">Roles List</a></li>
-                    <li class="breadcrumb-item"><a class="text-light" href="#!">Create Role</a></li>
+                    <li class="breadcrumb-item"><a class="text-light" href="#!">Edit Role</a></li>
                 </ul>
             </div>
         </div>
@@ -29,14 +29,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <form action="{{ route('roles.store') }}" method="POST">
+                        <form action="{{ route('roles.update', ['role' => $role->id]) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="input_role_name" class="font-weight-bold">
                                         Role name
                                     </label>
-                                    <input id="input_role_name" name="name" value="{{ old('name') }}" type="text"
+                                    <input id="input_role_name" name="name" value="{{ old('name', $role->name) }}" type="text"
                                         class="form-control @error('name') is-invalid @enderror" />
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
@@ -60,11 +61,11 @@
                                                     @foreach ($permissions as $permission)
                                                         <li class="list-group-item">
                                                             <div class="form-check">
-                                                                @if (old('permissions'))
+                                                                @if (old('permissions', $permissionChecked))
                                                                     <input class="form-check-input" id="{{ $permission }}"
                                                                         name="permissions[]" type="checkbox"
                                                                         value="{{ $permission }}"
-                                                                        {{ in_array($permission, old('permissions')) ? 'checked' : null }}>
+                                                                        {{ in_array($permission, old('permissions', $permissionChecked)) ? 'checked' : null }}>
                                                                 @else
                                                                     <input class="form-check-input" id="{{ $permission }}"
                                                                         name="permissions[]" type="checkbox"

@@ -73,12 +73,12 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            {{-- <a href="{{ route('roles.edit', ['post' => $role->id]) }}"
-                                                                class="text-primary p-2"><i class="fa fa-edit"></i></a> --}}
+                                                            <a href="{{ route('roles.edit', ['role' => $role->id]) }}"
+                                                                class="text-primary p-2"><i class="fa fa-edit"></i></a>
                                                             <a href="{{ route('roles.show', ['role' => $role->id]) }}" class="text-info p-2"><i class="fa fa-eye"></i></a>
-                                                            {{-- <a href="{{ route('roles.destroy', ['post' => $role->id]) }}"
+                                                            <a href="{{ route('roles.destroy', ['role' => $role->id]) }}"
                                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a> --}}
+                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a>
                                                         </form>
 
                                                     </div>
