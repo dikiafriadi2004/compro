@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Cms;
 
-use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -129,6 +130,10 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        if(User::role($role->name)->count()){
+            return redirect()->route('roles.index');
+        }
+        
         DB::beginTransaction();
         try {
             $role->revokePermissionTo($role->permissions->pluck('name')->toArray());

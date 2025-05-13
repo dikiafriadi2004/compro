@@ -61,6 +61,7 @@
                                             <th class="text-center">Name</th>
                                             <th class="text-center">Email</th>
                                             <th class="text-center">Username</th>
+                                            <th class="text-center">Role</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -71,18 +72,18 @@
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->username }}</td>
+                                                <td>{{ $user->roles->first()->name }}</td>
                                                 <td>
                                                     <div class="text-center">
                                                         <form action="{{ route('users.destroy', ['user' => $user->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            {{-- <a href="{{ route('users.edit', ['post' => $user->id]) }}"
-                                                                class="text-primary p-2"><i class="fa fa-edit"></i></a> --}}
-                                                            <a href="" class="text-info p-2"><i class="fa fa-eye"></i></a>
-                                                            {{-- <a href="{{ route('users.destroy', ['post' => $user->id]) }}"
+                                                            <a href="{{ route('users.edit', ['user' => $user->id]) }}"
+                                                                class="text-primary p-2"><i class="fa fa-edit"></i></a>
+                                                            <a href="{{ route('users.destroy', ['user' => $user->id]) }}"
                                                                 onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a> --}}
+                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a>
                                                         </form>
 
                                                     </div>

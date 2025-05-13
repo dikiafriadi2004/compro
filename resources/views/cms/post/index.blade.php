@@ -34,7 +34,9 @@
                             <div class="row">
 
                                 <div class="mailreact-right">
-                                    <a href="{{ route('post.create') }}" class="btn btn-secondary float-end mb-2">Add
+                                    @can('Posts Create')
+                                        <a href="{{ route('post.create') }}" class="btn btn-secondary float-end mb-2">Add
+                                        @endcan
                                         Post</a>
                                     <ul class="mailreact-list">
                                         <li>
@@ -75,24 +77,31 @@
                                                 <td>{{ $post->category_name }}</td>
                                                 <td class="text-center">
                                                     @if ($post->status == 'publish')
-                                                    <span class="badge badge-primary">{{ $post->status }}</span>
+                                                        <span class="badge badge-primary">{{ $post->status }}</span>
                                                     @else
-                                                    <span class="badge badge-danger">{{ $post->status }}</span>
+                                                        <span class="badge badge-danger">{{ $post->status }}</span>
                                                     @endif
-                                                    
-                                                    </td>
+
+                                                </td>
                                                 <td>
                                                     <div class="text-center">
                                                         <form action="{{ route('post.destroy', ['post' => $post->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            <a href="{{ route('post.edit', ['post' => $post->id]) }}"
-                                                                class="text-primary p-2"><i class="fa fa-edit"></i></a>
-                                                            <a href="" class="text-info p-2"><i class="fa fa-eye"></i></a>
-                                                            <a href="{{ route('post.destroy', ['post' => $post->id]) }}"
-                                                                onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a>
+                                                            @can('Posts Update')
+                                                                <a href="{{ route('post.edit', ['post' => $post->id]) }}"
+                                                                    class="text-primary p-2"><i class="fa fa-edit"></i></a>
+                                                            @endcan
+                                                            @can('Posts Detail')
+                                                                <a href="" class="text-info p-2"><i
+                                                                        class="fa fa-eye"></i></a>
+                                                            @endcan
+                                                            @can('Posts Delete')
+                                                                <a href="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                                    onclick="event.preventDefault(); this.closest('form').submit();"
+                                                                    class="text-danger p-2"><i class="fa fa-trash"></i> </a>
+                                                            @endcan
                                                         </form>
 
                                                     </div>
