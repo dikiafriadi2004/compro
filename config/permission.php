@@ -6,28 +6,28 @@ return [
         'Manage Posts' => [
             'Posts Show',
             'Posts Create',
-            'Posts Update',
+            'Posts Edit',
             'Posts Detail',
             'Posts Delete'
         ],
         'Manage Categories' => [
             'Category Show',
             'Category Create',
-            'Category Update',
+            'Category Edit',
             'Category Detail',
             'Category Delete'
         ],
         'Manage Roles' => [
             'Role Show',
             'Role Create',
-            'Role Update',
+            'Role Edit',
             'Role Detail',
             'Role Delete'
         ],
         'Manage Users' => [
             'User Show',
             'User Create',
-            'User Update',
+            'User Edit',
             'User Detail',
             'User Delete'
         ],

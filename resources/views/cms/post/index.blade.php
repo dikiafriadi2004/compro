@@ -36,8 +36,8 @@
                                 <div class="mailreact-right">
                                     @can('Posts Create')
                                         <a href="{{ route('post.create') }}" class="btn btn-secondary float-end mb-2">Add
-                                        @endcan
-                                        Post</a>
+                                            Post</a>
+                                    @endcan
                                     <ul class="mailreact-list">
                                         <li>
                                             <form action="{{ route('post.index') }}" method="GET">
@@ -89,7 +89,7 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            @can('Posts Update')
+                                                            @can('Posts Edit')
                                                                 <a href="{{ route('post.edit', ['post' => $post->id]) }}"
                                                                     class="text-primary p-2"><i class="fa fa-edit"></i></a>
                                                             @endcan

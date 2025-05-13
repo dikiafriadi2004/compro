@@ -22,8 +22,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('cms')->group(function(){
-        Route::resource('/post', PostController::class);
-        Route::resource('/categories', CategoryController::class);
+        // Post
+        // Route::resource('/post', PostController::class)->middleware('permission:Posts Show|Posts Create');
+        Route::get('/post', [PostController::class, 'index'])->name('post.index')->middleware('permission:Posts Show');
+        Route::get('/post/create', [PostController::class, 'create'])->name('post.create')->middleware('permission:Posts Create');
+        Route::post('/post', [PostController::class, 'store'])->name('post.store');
+        Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit')->middleware('permission:Posts Edit');
+        Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
+        Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+
+        // Categories
+        Route::resource('/categories', CategoryController::class)->middleware('permission:Category Show');
 
         // Users
         Route::resource('/users',UserController::class);
