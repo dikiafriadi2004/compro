@@ -23,13 +23,21 @@ class PostController extends Controller
         $posts = DB::table('posts')
             ->join('categories', 'posts.category_id', '=', 'categories.id')
             ->select('posts.*', 'categories.name as category_name')
+            ->when(!$user->getRoleNames()->contains('Super Admin'), function ($query) use ($user) {
+                // Filter hanya postingan milik user jika bukan Super Admin
+                $query->where('posts.user_id', $user->id);
+            })
             ->when($search, function ($query, $search) {
-                return $query->where(function ($q) use ($search) {
+                $query->where(function ($q) use ($search) {
                     $q->where('posts.title', 'like', '%' . $search . '%')
                         ->orWhere('categories.name', 'like', '%' . $search . '%')
                         ->orWhere('posts.description', 'like', '%' . $search . '%');
                 });
-            })->orderBy('id', 'desc')->paginate(10)->withQueryString();
+            })
+            ->orderBy('posts.id', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
         return view('cms.post.index', compact('posts'));
     }
 
@@ -55,11 +63,12 @@ class PostController extends Controller
             'content' => 'required',
             'category_id' => 'required',
             'thumbnail' => 'image|mimes:png,jpg,jpeg|max:2024'
-        ],[
+        ], [
             'title.required' => 'Title a field is required',
             'slug.required' => 'Slug a field is required',
             'slug.unique' => 'Slug already exists',
             'meta_description.required' => 'Description a field is required',
+            'meta_keyword.required' => 'Meta Keyword a field is required',
             'content.required' => 'Content a field is required',
             'category_id.required' => 'Category a field is required',
             'thumbnail.image' => 'Thumbnail just a picture',
@@ -67,7 +76,7 @@ class PostController extends Controller
             'thumbnail.max' => 'The maximum size for thumbnails is 2Mb',
         ]);
 
-        if ($request->hasFile('thumbnail')){
+        if ($request->hasFile('thumbnail')) {
             $image = $request->file('thumbnail');
             $image_name = time() . "_" . $image->getClientOriginalName();
             $destination_path = public_path(getenv('CUSTOM_THUMBNAIL_LOCATION'));
@@ -78,6 +87,7 @@ class PostController extends Controller
             'title' => $request->title,
             'slug' => $request->slug,
             'meta_description' => $request->meta_description,
+            'meta_keyword' => $request->meta_keyword,
             'content' => $request->content,
             'status' => $request->status,
             'category_id' => $request->category_id,
@@ -103,8 +113,15 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $user = Auth::user();
+
+        // Cek akses: jika bukan Super Admin, pastikan hanya edit milik sendiri
+        if (!$user->getRoleNames()->contains('Super Admin') && $post->user_id !== $user->id) {
+            return redirect()->route('post.index')->with('error', 'Anda tidak memiliki akses untuk mengedit postingan ini.');
+        }
+
         $categories = Category::orderByDesc('id')->get();
-        return view('cms.post.edit', compact('post','categories'));
+        return view('cms.post.edit', compact('post', 'categories'));
     }
 
     /**
@@ -116,14 +133,16 @@ class PostController extends Controller
             'title' => 'required',
             'slug' => 'required|string|max:255|unique:posts,slug,' . $post->id,
             'meta_description' => 'required',
+            'meta_keyword' => 'required',
             'content' => 'required',
             'category_id.required' => 'Category a field is required',
             'thumbnail' => 'image|mimes:png,jpg,jpeg|max:2024'
-        ],[
+        ], [
             'title.required' => 'Title a field is required',
             'slug.required' => 'Slug a field is required',
             'slug.unique' => 'Slug already exists',
             'meta_description.required' => 'Description a field is required',
+            'meta_keyword.required' => 'Meta Keyword a field is required',
             'content.required' => 'Content a field is required',
             'category_id.required' => 'Category a field is required',
             'thumbnail.image' => 'Thumbnail just a picture',
@@ -131,10 +150,10 @@ class PostController extends Controller
             'thumbnail.max' => 'The maximum size for thumbnails is 2Mb',
         ]);
 
-        if ($request->hasFile('thumbnail')){
+        if ($request->hasFile('thumbnail')) {
 
-            if(isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')). "/" . $post->thumbnail)){
-                unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')). "/" . $post->thumbnail);
+            if (isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail)) {
+                unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail);
             }
 
             $image = $request->file('thumbnail');
@@ -149,6 +168,7 @@ class PostController extends Controller
             'title' => $request->title,
             'slug' => $request->slug,
             'meta_description' => $request->meta_description,
+            'meta_keyword' => $request->meta_keyword,
             'content' => $request->content,
             'status' => $request->status,
             'category_id' => $request->category_id,
@@ -156,7 +176,7 @@ class PostController extends Controller
             'user_id' => Auth::user()->id,
         ];
 
-        
+
 
         Post::where('id', $post->id)->update($data);
 
@@ -168,14 +188,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if(isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')). "/" . $post->thumbnail)){
-            unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')). "/" . $post->thumbnail);
+        if (isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail)) {
+            unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail);
         }
 
         Post::where('id', $post->id)->delete();
 
         return redirect()->route('post.index')->with('success', 'Post has been deleted');
-
     }
 
     // private function generateUniqueSlug($title)
