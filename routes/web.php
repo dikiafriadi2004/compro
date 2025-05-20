@@ -35,14 +35,14 @@ Route::middleware('auth')->group(function () {
         Route::resource('/categories', CategoryController::class)->middleware('permission:Category Show');
 
         // Users
-        Route::resource('/users',UserController::class);
+        Route::resource('/users',UserController::class)->middleware('permission:User Show|User Create|User Edit|User Detail|User Delete');
 
         // Config
-        Route::get('/config', [ConfigController::class, 'edit'])->name('config.edit');
+        Route::get('/config', [ConfigController::class, 'edit'])->name('config.edit')->middleware('permission:Config Show');
         Route::put('/config', [ConfigController::class, 'update'])->name('config.update');
 
         // Roles
-        Route::resource('/roles', RoleController::class);
+        Route::resource('/roles', RoleController::class)->middleware('permission:Role Show');
     });
 
 });
