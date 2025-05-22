@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/categories', CategoryController::class)->middleware('permission:Category Show');
 
         // Users
-        Route::resource('/users',UserController::class)->middleware('permission:User Show|User Create|User Edit|User Detail|User Delete');
+        Route::resource('/users', UserController::class)->middleware('permission:User Show|User Create|User Edit|User Detail|User Delete');
 
         // Config
         Route::get('/config', [ConfigController::class, 'edit'])->name('config.edit')->middleware('permission:Config Show');
