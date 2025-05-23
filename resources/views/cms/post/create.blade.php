@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Description</label>
                                     <textarea class="form-control @error('meta_description') is-invalid @enderror" name="meta_description"
-                                        placeholder="Enter Description"></textarea>
+                                        placeholder="Enter Description" maxlength="200"></textarea>
                                     @error('meta_description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror

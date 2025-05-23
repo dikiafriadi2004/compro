@@ -254,54 +254,20 @@
                         </h3>
                     </div>
                 </div>
-                <div class="col-lg-4 mb-30">
-                    <div class="card">
-                        <img src="{{ asset('frontend/assets/images/images1.png') }}" class="card-img-top"
-                            alt="...">
-                        <div class="card-body">
-                            <a href="konterdigital.com" class="card-title-blog">Dukungan Pemerintah Terhadap
-                                Konter Digital Di Era Sekarang</a>
-                            <p class="card-text-blog">Bagi kebanyakan orang yang ingin
-                                memulai bisnis pulsa h2h murah, tentu
-                                tidak akan familiar dengan beberapa
-                                terminologinya. Contohnya adalah pulsa…
-                            </p>
-                            <span class="date-blog">26 Mei 2023</h3>
+                {{-- Blog --}}
+                @foreach ($posts as $post)
+                    <div class="col-lg-4 mb-30">
+                        <div class="card">
+                            <img src="{{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION') . '/' . $post->thumbnail) }}" class="card-img-top"
+                                alt="{{ $post->title }}">
+                            <div class="card-body">
+                                <a href="konterdigital.com" class="card-title-blog">{{ $post->title }}</a>
+                                <p class="card-text-blog">{{ $post->meta_description }}</p>
+                                <span class="date-blog">{{ $post->created_at->isoFormat('D MMMM Y') }}</h3>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 mb-30">
-                    <div class="card">
-                        <img src="{{ asset('frontend/assets/images/images1.png') }}" class="card-img-top"
-                            alt="...">
-                        <div class="card-body">
-                            <a href="konterdigital.com" class="card-title-blog">Dukungan Pemerintah Terhadap
-                                Konter Digital Di Era Sekarang</a>
-                            <p class="card-text-blog">Bagi kebanyakan orang yang ingin
-                                memulai bisnis pulsa h2h murah, tentu
-                                tidak akan familiar dengan beberapa
-                                terminologinya. Contohnya adalah pulsa…
-                            </p>
-                            <span class="date-blog">26 Mei 2023</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-30">
-                    <div class="card">
-                        <img src="{{ asset('frontend/assets/images/images1.png') }}" class="card-img-top"
-                            alt="...">
-                        <div class="card-body">
-                            <a href="konterdigital.com" class="card-title-blog">Dukungan Pemerintah Terhadap
-                                Konter Digital Di Era Sekarang</a>
-                            <p class="card-text-blog">Bagi kebanyakan orang yang ingin
-                                memulai bisnis pulsa h2h murah, tentu
-                                tidak akan familiar dengan beberapa
-                                terminologinya. Contohnya adalah pulsa…
-                            </p>
-                            <span class="date-blog">26 Mei 2023</h3>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
