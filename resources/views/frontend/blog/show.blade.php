@@ -4,6 +4,9 @@
     {{ $post->title }}
 @endsection
 
+@section('meta_keyword', $post->meta_keyword)
+@section('meta_description', $post->meta_description)
+
 @section('content')
     <section>
         <div class="container mt-150">

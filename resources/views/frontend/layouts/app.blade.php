@@ -6,9 +6,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="">
-    <meta name="description" content="Konter Digital Aplikasi Server Pulsa">
-    <meta name="keywords" content="Konter Digital Aplikasi Server Pulsa">
+
+    <meta name="keywords" content="{{ $meta_keyword ?? seo('meta_keyword') }}">
+    <meta name="description" content="{{ $meta_description ?? seo('meta_description') }}">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- shortcut icon-->
+    <link rel="icon" href="{{ asset('frontend/assets/images/favico.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/favico.png') }}" type="image/x-icon">
 
     <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
 

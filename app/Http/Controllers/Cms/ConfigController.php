@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Cms;
 
-use App\Http\Controllers\Controller;
 use App\Models\CMS\Config;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class ConfigController extends Controller
 {
@@ -86,6 +87,12 @@ class ConfigController extends Controller
         ]);
 
         $config->save();
+
+        // Perbarui cache site_config
+        Cache::forget('site_config');
+        Cache::rememberForever('site_config', function () {
+            return Config::first();
+        });
 
         return redirect()->back()->with('success', 'Pengaturan berhasil diperbarui!');
     }
