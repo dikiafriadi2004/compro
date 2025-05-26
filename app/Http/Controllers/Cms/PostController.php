@@ -137,7 +137,7 @@ class PostController extends Controller
             'meta_keyword' => 'required',
             'content' => 'required',
             'category_id.required' => 'Category a field is required',
-            'thumbnail' => 'required|image|mimes:png,jpg,jpeg|max:2024'
+            'thumbnail' => 'image|mimes:png,jpg,jpeg|max:2024'
         ], [
             'title.required' => 'Title a field is required',
             'slug.required' => 'Slug a field is required',
@@ -146,7 +146,6 @@ class PostController extends Controller
             'meta_keyword.required' => 'Meta Keyword a field is required',
             'content.required' => 'Content a field is required',
             'category_id.required' => 'Category a field is required',
-            'thumbnail.required' => 'Thumbnail a field is required',
             'thumbnail.image' => 'Thumbnail just a picture',
             'thumbnail.mimes' => "Extension just a JPEG, JPG, dan PNG",
             'thumbnail.max' => 'The maximum size for thumbnails is 2Mb',

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<section>
+    <section>
         <div class="header mt-150">
             <div class="container">
                 <div class="row">
@@ -26,8 +26,7 @@
                         </a>
                     </div>
                     <div class="col-lg-7">
-                        <img src="{{ asset('frontend/assets/images/images1.png') }}" class="img-fluid"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/images1.png') }}" class="img-fluid" alt="">
                     </div>
                 </div>
             </div>
@@ -57,67 +56,55 @@
                         <img src="{{ asset('fronted/assets/images/ic_axis.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_indosat.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_indosat.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
                         <img src="{{ asset('frontend/assets/images/ic_tri.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_dana.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_dana.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
                         <img src="{{ asset('frontend/assets/images/ic_ovo.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_gopay.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_gopay.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_shopeepay.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_shopeepay.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_linkaja.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_linkaja.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_telkomsel.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_telkomsel.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
                         <img src="{{ asset('frontend/assets/images/ic_xl.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_axis.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_axis.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_indosat.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_indosat.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
                         <img src="{{ asset('frontend/assets/images/ic_tri.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_dana.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_dana.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
                         <img src="{{ asset('frontend/assets/images/ic_ovo.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_gopay.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_gopay.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_shopeepay.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_shopeepay.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
-                        <img src="{{ asset('frontend/assets/images/ic_linkaja.png') }}" class="ic-logos"
-                            alt="">
+                        <img src="{{ asset('frontend/assets/images/ic_linkaja.png') }}" class="ic-logos" alt="">
                     </div>
                 </div>
             </div>
@@ -156,7 +143,8 @@
                                 <div class="col-lg-3">
                                     <div class="big-keunggulan-card">
                                         <div class="icon mb-20">
-                                            <img src="{{ asset('frontend/assets/images/icon_mitra.png') }}" alt="">
+                                            <img src="{{ asset('frontend/assets/images/icon_mitra.png') }}"
+                                                alt="">
                                         </div>
                                         <div class="copy">
                                             <h3 class="small-header mb-10">
@@ -172,7 +160,8 @@
                                 <div class="col-lg-3">
                                     <div class="big-keunggulan-card">
                                         <div class="icon mb-20">
-                                            <img src="{{ asset('frontend/assets/images/icon_reward.png') }}" alt="">
+                                            <img src="{{ asset('frontend/assets/images/icon_reward.png') }}"
+                                                alt="">
                                         </div>
                                         <div class="copy">
                                             <h3 class="small-header mb-10">
@@ -188,7 +177,8 @@
                                 <div class="col-lg-3">
                                     <div class="big-keunggulan-card">
                                         <div class="icon mb-20">
-                                            <img src="{{ asset('frontend/assets/images/icon_produk.png') }}" alt="">
+                                            <img src="{{ asset('frontend/assets/images/icon_produk.png') }}"
+                                                alt="">
                                         </div>
                                         <div class="copy">
                                             <h3 class="small-header mb-10">
@@ -217,7 +207,8 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-6">
-                                <img src="{{ asset('frontend/assets/images/illustration.png') }}" alt="" class="img-fluid">
+                                <img src="{{ asset('frontend/assets/images/illustration.png') }}" alt=""
+                                    class="img-fluid">
                             </div>
                             <div class="col-lg-6 operational-copy">
                                 <h3 class="medium-header mb-30">
@@ -258,16 +249,23 @@
                 @foreach ($posts as $post)
                     <div class="col-lg-4 mb-30">
                         <div class="card">
-                            <img src="{{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION') . '/' . $post->thumbnail) }}" class="card-img-top"
-                                alt="{{ $post->title }}">
+                            <img src="{{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION') . '/' . $post->thumbnail) }}"
+                                class="card-img-top" alt="{{ $post->title }}">
                             <div class="card-body">
-                                <a href="konterdigital.com" class="card-title-blog">{{ $post->title }}</a>
-                                <p class="card-text-blog">{{ $post->meta_description }}</p>
-                                <span class="date-blog">{{ $post->created_at->isoFormat('D MMMM Y') }}</h3>
+                                <a href="{{ route('blog.show', ['slug' => $post->slug]) }}" class="card-title-blog">
+                                    {{ $post->title }}
+                                </a>
+                                <p class="card-text-blog">
+                                    {{ excerpt($post->meta_description) }}
+                                </p>
+                                <span class="date-blog">
+                                    {{ $post->created_at->isoFormat('D MMMM Y') }}
+                                </span>
                             </div>
                         </div>
                     </div>
                 @endforeach
+
             </div>
         </div>
     </section>

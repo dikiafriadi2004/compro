@@ -482,6 +482,14 @@ blockquote span {
     font-weight: var(--fwsemibold);
 }
 
+.white-overlay {
+    position: absolute;
+    width: 77px;
+    height: 77px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.5); /* putih transparan */
+}
+
 .date-artikel {
     position: absolute;
     padding-left: 11px;
