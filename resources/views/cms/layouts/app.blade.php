@@ -75,7 +75,8 @@
     <script src="{{ asset('backend/assets/js/custom-script.js') }}"></script>
 
     <!-- SweetAler2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+    <script src="{{ asset('backend/assets/js/sweetalert2@11.js') }}"></script>
 
     @stack('js')
 </body>
