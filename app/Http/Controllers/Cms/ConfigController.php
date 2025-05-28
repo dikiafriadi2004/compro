@@ -28,6 +28,7 @@ class ConfigController extends Controller
             'twitter' => 'required|string|max:255',
             'whatsapp' => 'required|string|max:255',
             'telegram' => 'required|string|max:255',
+            'ch_telegram' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
         ], [
             'web_name.required' => 'Name Website a field is required',
@@ -43,6 +44,7 @@ class ConfigController extends Controller
             'instagram.required' => 'Instagram a field is required',
             'whatsapp.required' => 'Whatsapp a field is required',
             'telegram.required' => 'Telegram a field is required',
+            'ch_telegram.required' => 'Telegram a field is required',
             'alamat.required' => 'Alamat a field is required',
         ]);
 
@@ -83,6 +85,7 @@ class ConfigController extends Controller
             'twitter' => $request->twitter,
             'whatsapp' => $request->whatsapp,
             'telegram' => $request->telegram,
+            'ch_telegram' => $request->ch_telegram,
             'alamat' => $request->alamat
         ]);
 
@@ -94,6 +97,6 @@ class ConfigController extends Controller
             return Config::first();
         });
 
-        return redirect()->back()->with('success', 'Pengaturan berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Config successfully updated!');
     }
 }

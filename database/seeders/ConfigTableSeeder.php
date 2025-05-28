@@ -25,6 +25,7 @@ class ConfigTableSeeder extends Seeder
                 'twitter' => 'http://x.com',
                 'whatsapp' => 'http://whatsapp.com',
                 'telegram' => 'http://telegram.com',
+                'ch_telegram' => 'http://telegram.com',
                 'alamat' => 'Jl. KR. Kalok III, No. 363, Desa Lambhue, Kec. Darul Imarah, Aceh Besar',
             ]
         ]);

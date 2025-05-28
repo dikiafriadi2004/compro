@@ -1,7 +1,7 @@
 @extends('cms.layouts.app')
 
 @section('title')
-Config Website
+    Config Website
 @endsection
 
 @push('css')
@@ -140,9 +140,17 @@ Config Website
                                 </div>
 
                                 <div class="form-group">
+                                    <label class="form-label">Channel Telegram</label>
+                                    <input class="form-control @error('ch_telegram') is-invalid @enderror" name="ch_telegram"
+                                        type="text" placeholder="ch_telegram" value="{{ $config->ch_telegram }}">
+                                    @error('ch_telegram')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
                                     <label class="form-label">Alamat</label>
-                                    <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat"
-                                        placeholder="Enter Alamat">{{ $config->alamat }}</textarea>
+                                    <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" placeholder="Enter Alamat">{{ $config->alamat }}</textarea>
                                     @error('alamat')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -184,4 +192,30 @@ Config Website
             }
         }
     </script>
+
+    {{-- Success Alert --}}
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: "{{ session('success') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    {{-- Error Alert --}}
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: "{{ session('error') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 @endpush

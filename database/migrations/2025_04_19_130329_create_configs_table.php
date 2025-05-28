@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('twitter');
             $table->string('whatsapp');
             $table->string('telegram');
+            $table->string('ch_telegram');
             $table->longText('alamat');
             $table->timestamps();
         });

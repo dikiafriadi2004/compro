@@ -13,10 +13,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- shortcut icon-->
-    <link rel="icon" href="{{ asset('frontend/assets/images/favico.png') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('frontend/assets/images/favico.png') }}" type="image/x-icon">
+    @php
+        $faviconPath = $favicon
+            ? asset(getenv('CUSTOM_UPLOAD_LOCATION') . '/' . $favicon)
+            : asset('backend/assets/images/logo/favicon.png');
 
-    <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
+        $logoPath = $logo
+            ? asset(getenv('CUSTOM_UPLOAD_LOCATION') . '/' . $logo)
+            : asset('backend/assets/images/logo/logo.png');
+
+    @endphp
+
+    <link rel="icon" href="{{ $faviconPath }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ $faviconPath }}" type="image/x-icon">
+
+
+    <title>{{ $web_name }} | @yield('title')</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"

@@ -34,7 +34,8 @@
                             <div class="row">
 
                                 <div class="mailreact-right">
-                                    <a href="{{ route('users.create') }}" class="btn btn-secondary float-end mb-2">Register</a>
+                                    <a href="{{ route('users.create') }}"
+                                        class="btn btn-secondary float-end mb-2">Register</a>
                                     <ul class="mailreact-list">
                                         <li>
                                             <form action="{{ route('users.index') }}" method="GET">
@@ -75,15 +76,18 @@
                                                 <td>{{ $user->roles->first()->name }}</td>
                                                 <td>
                                                     <div class="text-center">
-                                                        <form action="{{ route('users.destroy', ['user' => $user->id]) }}"
-                                                            method="POST">
+                                                        <form id="delete-form-{{ $user->id }}"
+                                                            action="{{ route('users.destroy', ['user' => $user->id]) }}"
+                                                            method="POST" style="display: inline;">
                                                             @csrf
-                                                            @method('delete')
+                                                            @method('DELETE')
                                                             <a href="{{ route('users.edit', ['user' => $user->id]) }}"
                                                                 class="text-primary p-2"><i class="fa fa-edit"></i></a>
-                                                            <a href="{{ route('users.destroy', ['user' => $user->id]) }}"
-                                                                onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a>
+                                                            @if (auth()->user()->id !== $user->id)
+                                                                <a href="#"
+                                                                    onclick="event.preventDefault(); confirmDelete({{ $user->id }}, '{{ $user->name }}')"
+                                                                    class="text-danger p-2"><i class="fa fa-trash"></i></a>
+                                                            @endif
                                                         </form>
 
                                                     </div>
@@ -105,4 +109,49 @@
 @endsection
 
 @push('js')
+    {{-- Alert Success --}}
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: "{{ session('success') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    {{-- Alert Error --}}
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: "{{ session('error') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    {{-- Confirm Delete --}}
+    <script>
+        function confirmDelete(userId, userName) {
+            Swal.fire({
+                title: 'Are you sure you want to delete?',
+                text: `User "${userName}" will be permanently deleted!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + userId).submit();
+                }
+            });
+        }
+    </script>
 @endpush

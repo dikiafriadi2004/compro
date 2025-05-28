@@ -117,20 +117,25 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        // Cegah user menghapus dirinya sendiri
+        if (auth()->id() === $user->id) {
+            return redirect()->route('users.index')->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+        }
+
         DB::beginTransaction();
 
         try {
-            // Hapus role yang terkait dulu (jika pakai Spatie Permission)
+            // Hapus role yang terkait (jika pakai Spatie Permission)
             $user->removeRole($user->roles->first());
 
             // Hapus user
             $user->delete();
 
             DB::commit();
-            return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+            return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => 'Failed to delete user: ' . $th->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Gagal menghapus user: ' . $th->getMessage()]);
         }
     }
 }

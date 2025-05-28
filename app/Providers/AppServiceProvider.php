@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\CMS\Config;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,5 +24,22 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         Paginator::useBootstrapFive();
+
+        View::composer('*', function ($view) {
+            $config = Config::first();
+            $view->with([
+                'web_name'    => $config?->web_name ?? config('app.name'),
+                'logo'    => $config?->logo ?? null,
+                'favicon' => $config?->favicon ?? null,
+                'nama_pt'     => $config?->nama_pt ?? 'Nama PT Default',
+                'alamat'   => $config?->alamat ?? 'Alamat Default',
+                'facebook'   => $config?->facebook ?? 'https://facebook.com',
+                'instagram'   => $config?->instagram ?? 'https://instagram.com',
+                'twitter'   => $config?->twitter ?? 'https://x.com',
+                'whatsapp'   => $config?->whatsapp ?? 'https://web.whatsapp.com/',
+                'telegram'   => $config?->telegram ?? 'http://telegram.com',
+                'ch_telegram'   => $config?->telegram ?? 'http://telegram.com',
+            ]);
+        });
     }
 }

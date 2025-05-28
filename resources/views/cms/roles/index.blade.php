@@ -34,7 +34,8 @@
                             <div class="row">
 
                                 <div class="mailreact-right">
-                                    <a href="{{ route('roles.create') }}" class="btn btn-secondary float-end mb-2">Add Role</a>
+                                    <a href="{{ route('roles.create') }}" class="btn btn-secondary float-end mb-2">Add
+                                        Role</a>
                                     <ul class="mailreact-list">
                                         <li>
                                             <form action="{{ route('roles.index') }}" method="GET">
@@ -69,17 +70,21 @@
                                                 <td>{{ $role->name }}</td>
                                                 <td>
                                                     <div class="text-center">
-                                                        <form action="{{ route('roles.destroy', ['role' => $role->id]) }}"
-                                                            method="POST">
+                                                        <form id="delete-form-{{ $role->id }}"
+                                                            action="{{ route('roles.destroy', $role->id) }}" method="POST"
+                                                            style="display: none;">
                                                             @csrf
-                                                            @method('delete')
-                                                            <a href="{{ route('roles.edit', ['role' => $role->id]) }}"
-                                                                class="text-primary p-2"><i class="fa fa-edit"></i></a>
-                                                            <a href="{{ route('roles.show', ['role' => $role->id]) }}" class="text-info p-2"><i class="fa fa-eye"></i></a>
-                                                            <a href="{{ route('roles.destroy', ['role' => $role->id]) }}"
-                                                                onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="text-danger p-2"><i class="fa fa-trash"></i> </a>
+                                                            @method('DELETE')
                                                         </form>
+                                                        <a href="{{ route('roles.edit', ['role' => $role->id]) }}"
+                                                            class="text-primary p-2"><i class="fa fa-edit"></i></a>
+                                                        <a href="{{ route('roles.show', ['role' => $role->id]) }}"
+                                                            class="text-info p-2"><i class="fa fa-eye"></i></a>
+                                                        <a href="#" class="text-danger p-2 btn-delete-role"
+                                                            data-id="{{ $role->id }}" data-name="{{ $role->name }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+
 
                                                     </div>
                                                 </td>
@@ -100,4 +105,48 @@
 @endsection
 
 @push('js')
+    <script>
+        // Konfirmasi sebelum hapus role
+        document.querySelectorAll('.btn-delete-role').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const roleId = this.getAttribute('data-id');
+                const roleName = this.getAttribute('data-name');
+
+                Swal.fire({
+                    title: 'Are you sure you want to delete?',
+                    text: `Role "${roleName}" will be permanently deleted!`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById(`delete-form-${roleId}`).submit();
+                    }
+                });
+            });
+        });
+
+        // Tampilkan notifikasi dari session
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        @elseif (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        @endif
+    </script>
 @endpush

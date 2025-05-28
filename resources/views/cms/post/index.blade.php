@@ -85,27 +85,36 @@
                                                 </td>
                                                 <td>
                                                     <div class="text-center">
-                                                        <form action="{{ route('post.destroy', ['post' => $post->id]) }}"
+                                                        <form id="delete-form-{{ $post->id }}"
+                                                            action="{{ route('post.destroy', ['post' => $post->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
+
                                                             @can('Posts Edit')
                                                                 <a href="{{ route('post.edit', ['post' => $post->id]) }}"
-                                                                    class="text-primary p-2"><i class="fa fa-edit"></i></a>
+                                                                    class="text-primary p-2">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </a>
                                                             @endcan
+
                                                             @can('Posts Detail')
-                                                                <a href="" class="text-info p-2"><i
-                                                                        class="fa fa-eye"></i></a>
+                                                                <a href="#" class="text-info p-2">
+                                                                    <i class="fa fa-eye"></i>
+                                                                </a>
                                                             @endcan
+
                                                             @can('Posts Delete')
-                                                                <a href="{{ route('post.destroy', ['post' => $post->id]) }}"
-                                                                    onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                    class="text-danger p-2"><i class="fa fa-trash"></i> </a>
+                                                                <a href="#" class="text-danger p-2"
+                                                                    onclick="confirmDelete({{ $post->id }}, '{{ $post->title }}')">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
                                                             @endcan
                                                         </form>
-
                                                     </div>
                                                 </td>
+
+
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -123,4 +132,47 @@
 @endsection
 
 @push('js')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: "{{ session('success') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: "{{ session('error') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    <script>
+        function confirmDelete(postId, postTitle) {
+            Swal.fire({
+                title: 'Are you sure you want to delete?',
+                text: `Post "${postTitle}" will be permanently deleted!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + postId).submit();
+                }
+            });
+        }
+    </script>
+
 @endpush

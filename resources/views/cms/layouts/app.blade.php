@@ -71,10 +71,13 @@
     <!-- Scrollbar-->
     <script src="{{ asset('backend/assets/js/vendors/simplebar.js') }}"></script>
 
-    @stack('js')
-
     <!-- Custom script-->
     <script src="{{ asset('backend/assets/js/custom-script.js') }}"></script>
+
+    <!-- SweetAler2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @stack('js')
 </body>
 
 </html>

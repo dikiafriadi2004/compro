@@ -4,15 +4,12 @@
             <div class="row col-lg-12 mb-30">
                 <div class="col-lg">
                     <div class="logo-footer mb-3">
-                        <img src="{{ asset('frontend/assets/images/logo.png') }}" class="logo" alt="">
+                        <img src="{{ $logoPath }}" class="logo" alt="{{ $web_name }}">
                     </div>
                     <div>
                         <h3 class="footer-copy">
-                            PT. Media Usaha Digital Kreatif <br>
-                            Jl. KR. Kalok III, No. 363 <br>
-                            Desa Lam bheu <br>
-                            Kec. Darul Imarah <br>
-                            Aceh Besar
+                            {{ $nama_pt }} <br>
+                            {{ $alamat }}
                         </h3>
                     </div>
                 </div>
@@ -41,10 +38,10 @@
                     <div class="footer-copy">
                         <ul class="navbar-footer">
                             <li>
-                                Chat : <a href="https://t.me/cs_konterdigital">CS_KONTERDIGITAL</a>
+                                Chat : <a href="{{ $telegram }}">CS_KONTERDIGITAL</a>
                             </li>
                             <li>
-                                Channel : <a href="https://t.me/ptmudk">konterdigitalofc</a>
+                                Channel : <a href="{{ $ch_telegram }}">konterdigitalofc</a>
                             </li>
                         </ul>
                     </div>
@@ -56,7 +53,7 @@
                     <div class="footer-copy">
                         <ul class="navbar-footer">
                             <li>
-                                Whatsapp : <a href="https://wa.me/6282165348577?text=Hallo...">0821-6534-8577</a>
+                                Whatsapp : <a href="{{ $whatsapp }}">0821-6534-8577</a>
                             </li>
                         </ul>
                     </div>

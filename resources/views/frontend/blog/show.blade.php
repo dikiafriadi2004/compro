@@ -35,10 +35,25 @@
                             Bagikan Artikel :
                         </h3>
                         <div class="icon-share">
+                            @php
+                                $postUrl = urlencode(route('blog.show', ['slug' => $post->slug]));
+                                $postTitle = urlencode($post->title);
+                            @endphp
                             <ul>
-                                <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa-solid fa-paper-plane"></i></a></li>
+                                <li>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ $postUrl }}"
+                                        target="_blank" title="Bagikan ke Facebook"><i
+                                            class="fa-brands fa-facebook-f"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/intent/tweet?url={{ $postUrl }}&text={{ $postTitle }}"
+                                        target="_blank" title="Bagikan ke Twitter"><i class="fa-brands fa-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://t.me/share/url?url={{ $postUrl }}&text={{ $postTitle }}"
+                                        target="_blank" title="Bagikan ke Telegram"><i
+                                            class="fa-solid fa-paper-plane"></i></a>
+                                </li>
                             </ul>
                         </div>
                     </div>

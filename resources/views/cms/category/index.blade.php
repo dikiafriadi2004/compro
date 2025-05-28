@@ -95,16 +95,19 @@
                                                 <td>{{ $category->slug }}</td>
                                                 <td>
                                                     <div class="text-center">
-                                                        <form
+                                                        <form id="delete-form-{{ $category->id }}"
                                                             action="{{ route('categories.destroy', ['category' => $category->id]) }}"
-                                                            method="POST">
+                                                            method="POST" style="display:inline;">
                                                             @csrf
-                                                            @method('delete')
+                                                            @method('DELETE')
                                                             <button class="btn text-primary p-2" type="button"
-                                                            data-bs-toggle="modal" data-bs-target="#modalCategory{{ $category->id }}"><i class="fa fa-edit"></i></button>
-                                                            <a href="{{ route('categories.destroy', ['category' => $category->id]) }}"
-                                                                onclick="event.preventDefault(); this.closest('form').submit();"
-                                                                class="btn text-danger p-2"><i class="fa fa-trash"></i></a>
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modalCategory{{ $category->id }}"><i
+                                                                    class="fa fa-edit"></i></button>
+                                                            <a href="#" class="btn text-danger p-2"
+                                                                onclick="event.preventDefault(); confirmDelete({{ $category->id }}, '{{ $category->name }}')">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
                                                         </form>
 
                                                     </div>
@@ -128,4 +131,49 @@
 @endsection
 
 @push('js')
+    {{-- Success Alert --}}
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: "{{ session('success') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    {{-- Error Alert --}}
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: "{{ session('error') }}",
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
+
+    {{-- Confirm Delete --}}
+    <script>
+        function confirmDelete(categoryId, categoryName) {
+            Swal.fire({
+                title: 'Are you sure you want to delete?',
+                text: `Category "${categoryName}" will be permanently deleted!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + categoryId).submit();
+                }
+            });
+        }
+    </script>
 @endpush

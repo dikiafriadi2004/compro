@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-white">
     <div class="container main-navbar">
         <a class="navbar-brand" href="#">
-            <img src="{{ asset('frontend/assets/images/logo.png') }}" class="logo" alt="">
+            <img src="{{ $logoPath }}" class="logo" alt="{{ $web_name }}">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
