@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Cms\CategoryController;
-use App\Http\Controllers\Cms\ConfigController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Cms\PostController;
 use App\Http\Controllers\Cms\RoleController;
 use App\Http\Controllers\Cms\UserController;
+use App\Http\Controllers\Cms\ConfigController;
+use App\Http\Controllers\Cms\CategoryController;
+use App\Http\Controllers\Cms\DashboardController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -18,9 +19,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
-Route::get('/dashboard', function () {
-    return view('cms.dashboard.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('cms')->group(function(){
+        // Dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         // Post
         // Route::resource('/post', PostController::class)->middleware('permission:Posts Show|Posts Create');
         Route::get('/post', [PostController::class, 'index'])->name('post.index')->middleware('permission:Posts Show');
