@@ -47,15 +47,6 @@
             <div class="carousel mb-30">
                 <div class="carousel-wrapper">
                     <div class="mr-30">
-                        <img src="{{ asset('fronted/assets/images/ic_axis.png') }}" class="ic-logos" alt="">
-                    </div>
-                    <div class="mr-30">
-                        <img src="{{ asset('fronted/assets/images/ic_axis.png') }}" class="ic-logos" alt="">
-                    </div>
-                    <div class="mr-30">
-                        <img src="{{ asset('fronted/assets/images/ic_axis.png') }}" class="ic-logos" alt="">
-                    </div>
-                    <div class="mr-30">
                         <img src="{{ asset('frontend/assets/images/ic_indosat.png') }}" class="ic-logos" alt="">
                     </div>
                     <div class="mr-30">
