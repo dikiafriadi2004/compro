@@ -19,6 +19,9 @@
 body {
     font-family: 'Poppins', 'sans-serif';
     background: var(--bluesoft);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .active {
@@ -32,6 +35,11 @@ body {
     font-size: 48px;
     margin: 0;
 }
+
+.footer{
+    margin-top: auto;
+}
+
 
 .medium-header {
     font-weight: var(--fwbold);

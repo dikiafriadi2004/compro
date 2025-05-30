@@ -226,38 +226,40 @@
         </div>
     </section>
 
-    <section>
-        <div class="container mt-70">
-            <div class="row col-lg-12">
-                <div class="row text-center">
-                    <div class="col-lg-12">
-                        <h3 class="medium-header mb-30">
-                            BLOG
-                        </h3>
-                    </div>
-                </div>
-                {{-- Blog --}}
-                @foreach ($posts as $post)
-                    <div class="col-lg-4 mb-30">
-                        <div class="card">
-                            <img src="{{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION') . '/' . $post->thumbnail) }}"
-                                class="card-img-top" alt="{{ $post->title }}">
-                            <div class="card-body">
-                                <a href="{{ route('blog.show', ['slug' => $post->slug]) }}" class="card-title-blog">
-                                    {{ $post->title }}
-                                </a>
-                                <p class="card-text-blog">
-                                    {{ excerpt($post->meta_description) }}
-                                </p>
-                                <span class="date-blog">
-                                    {{ $post->created_at->isoFormat('D MMMM Y') }}
-                                </span>
-                            </div>
+    @if ($posts->count())
+        <section>
+            <div class="container mt-70">
+                <div class="row col-lg-12">
+                    <div class="row text-center">
+                        <div class="col-lg-12">
+                            <h3 class="medium-header mb-30">
+                                BLOG
+                            </h3>
                         </div>
                     </div>
-                @endforeach
+                    {{-- Blog --}}
+                    @foreach ($posts as $post)
+                        <div class="col-lg-4 mb-30">
+                            <div class="card">
+                                <img src="{{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION') . '/' . $post->thumbnail) }}"
+                                    class="card-img-top" alt="{{ $post->title }}">
+                                <div class="card-body">
+                                    <a href="{{ route('blog.show', ['slug' => $post->slug]) }}" class="card-title-blog">
+                                        {{ $post->title }}
+                                    </a>
+                                    <p class="card-text-blog">
+                                        {{ excerpt($post->meta_description) }}
+                                    </p>
+                                    <span class="date-blog">
+                                        {{ $post->created_at->isoFormat('D MMMM Y') }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
 
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 @endsection
