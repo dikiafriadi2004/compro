@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserTableSeeder::class,
             PermissionTableSeeder::class,
-            ConfigTableSeeder::class
+            ConfigTableSeeder::class,
+            LandingTableSeeder::class
         ]);
     }
 }

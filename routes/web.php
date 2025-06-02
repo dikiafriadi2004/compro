@@ -6,6 +6,7 @@ use App\Http\Controllers\Cms\PostController;
 use App\Http\Controllers\Cms\RoleController;
 use App\Http\Controllers\Cms\UserController;
 use App\Http\Controllers\Cms\ConfigController;
+use App\Http\Controllers\Cms\LandingController;
 use App\Http\Controllers\Cms\CategoryController;
 use App\Http\Controllers\Cms\DashboardController;
 use App\Http\Controllers\Frontend\BlogController;
@@ -37,6 +38,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit')->middleware('permission:Posts Edit');
         Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
         Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+
+        // Landing
+        Route::get('/landing', [LandingController::class, 'edit'])->name('landing.edit')->middleware('permission:Landing Show');
+        Route::put('/landing', [LandingController::class, 'update'])->name('landing.update');
 
         // Categories
         Route::resource('/categories', CategoryController::class)->middleware('permission:Category Show');

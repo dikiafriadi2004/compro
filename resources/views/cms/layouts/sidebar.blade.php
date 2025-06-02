@@ -29,6 +29,13 @@
                     </a>
                 </li>
             @endcan
+            @can('Landing Show')
+                <li class="menu-item {{ request()->routeIs('landing.*') ? 'active' : '' }}">
+                    <a href="{{ route('landing.edit') }}">
+                        <div class="icon-item"><i data-feather="file-text"></i></div><span>Landing Page</span>
+                    </a>
+                </li>
+            @endcan
             @can('User Show')
             <li class="cdxmenu-title">
                 <h5>Settings</h5>
@@ -49,6 +56,7 @@
                     </a>
                 </li>
             @endcan
+
             @can('Config Show')
                 <li class="menu-item {{ request()->routeIs('config.*') ? 'active' : '' }}">
                     <a href="{{ route('config.edit') }}">

@@ -35,6 +35,10 @@ return [
         'Manage Config' => [
             'Config Show'
         ],
+
+        'Manage Landing' => [
+            'Landing Show'
+        ],
     ],
 
     'models' => [

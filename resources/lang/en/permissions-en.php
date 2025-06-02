@@ -28,5 +28,7 @@ return [
     'User Detail' => 'Detail',
     'User Delete' => 'Delete',
     'Manage Config' => 'Manage Config',
-    'Config Show' => "Show"
+    'Config Show' => "Show",
+    'Manage Landing' => 'Manage Landing',
+    'Landing Show' => "Show",
 ];

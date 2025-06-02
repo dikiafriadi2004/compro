@@ -9,18 +9,14 @@
         <div class="header mt-150">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-5 copywriting align-self-center">
+                    <div class="col-lg-5 copywriting">
                         <h1 class="big-header mb-10">
-                            Konter Digital, <br>
-                            Solusi Segala <br>
-                            Kebutuhan <br>
-                            Usaha
+                            {{ $landing->title }}
                         </h1>
                         <p class="primary-copy mb-30">
-                            Konter Digital adalah solusi segala kebutuhan Perjalanan
-                            usaha Mitra dalam membuka Peluang baru
+                            {{ $landing->description }}
                         </p>
-                        <a href="#" class="btn btn-cta mb-30">
+                        <a href="{{ $landing->cta }}" class="btn btn-cta mb-30">
                             <i class="fa-brands fa-google-play"></i>
                             Download Sekarang
                         </a>
@@ -214,7 +210,7 @@
                                     5. Kembangkan jaringan downline jika anda ingin menjadikan Konter Digital
                                     menjadi sebuah aplikasi bisnis yang menguntungkan.
                                 </p>
-                                <a href="#" class="btn btn-cta">
+                                <a href="{{ $landing->cta }}" class="btn btn-cta">
                                     <i class="fa-brands fa-google-play"></i>
                                     Download Sekarang
                                 </a>
