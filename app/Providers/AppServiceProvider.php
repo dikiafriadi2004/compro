@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
                 'twitter'   => $config?->twitter ?? 'https://x.com',
                 'whatsapp'   => $config?->whatsapp ?? 'https://web.whatsapp.com/',
                 'telegram'   => $config?->telegram ?? 'http://telegram.com',
-                'ch_telegram'   => $config?->telegram ?? 'http://telegram.com',
+                'ch_telegram'   => $config?->ch_telegram ?? 'http://telegram.com',
             ]);
         });
     }

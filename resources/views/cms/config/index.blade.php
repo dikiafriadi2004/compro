@@ -125,7 +125,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Whatsapp</label>
                                     <input class="form-control @error('whatsapp') is-invalid @enderror" name="whatsapp"
-                                        type="text" placeholder="whatsapp" value="{{ $config->whatsapp }}">
+                                        type="text" placeholder="ex 628228475585" value="{{ $config->whatsapp }}">
                                     @error('whatsapp')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -133,7 +133,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Telegram</label>
                                     <input class="form-control @error('telegram') is-invalid @enderror" name="telegram"
-                                        type="text" placeholder="telegram" value="{{ $config->telegram }}">
+                                        type="text" placeholder="ex cs_konterdigitalofc" value="{{ $config->telegram }}">
                                     @error('telegram')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -142,7 +142,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Channel Telegram</label>
                                     <input class="form-control @error('ch_telegram') is-invalid @enderror" name="ch_telegram"
-                                        type="text" placeholder="ch_telegram" value="{{ $config->ch_telegram }}">
+                                        type="text" placeholder="ex konterdigitalofc" value="{{ $config->ch_telegram }}">
                                     @error('ch_telegram')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror

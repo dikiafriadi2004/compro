@@ -38,10 +38,10 @@
                     <div class="footer-copy">
                         <ul class="navbar-footer">
                             <li>
-                                Chat : <a href="{{ $telegram }}">CS_KONTERDIGITAL</a>
+                                Chat : <a href="https://t.me/{{ $telegram }}">{{ $telegram }}</a>
                             </li>
                             <li>
-                                Channel : <a href="{{ $ch_telegram }}">konterdigitalofc</a>
+                                Channel : <a href="https://t.me/{{ $ch_telegram }}">{{ $ch_telegram }}</a>
                             </li>
                         </ul>
                     </div>
@@ -53,7 +53,7 @@
                     <div class="footer-copy">
                         <ul class="navbar-footer">
                             <li>
-                                Whatsapp : <a href="{{ $whatsapp }}">0821-6534-8577</a>
+                                Whatsapp : <a href="https://api.whatsapp.com/send?phone={{ $whatsapp }}">{{ $whatsapp }}</a>
                             </li>
                         </ul>
                     </div>
