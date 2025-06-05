@@ -53,7 +53,7 @@
                     <div class="footer-copy">
                         <ul class="navbar-footer">
                             <li>
-                                Whatsapp : <a href="https://api.whatsapp.com/send?phone={{ $whatsapp }}">{{ $whatsapp }}</a>
+                                Whatsapp : <a href="https://api.whatsapp.com/send?phone={{ $whatsapp }}">{{ $whatsapp_formatted }}</a>
                             </li>
                         </ul>
                     </div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\CMS\Config;
+use App\Helpers\PhoneHelper;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -36,7 +37,8 @@ class AppServiceProvider extends ServiceProvider
                 'facebook'   => $config?->facebook ?? 'https://facebook.com',
                 'instagram'   => $config?->instagram ?? 'https://instagram.com',
                 'twitter'   => $config?->twitter ?? 'https://x.com',
-                'whatsapp'   => $config?->whatsapp ?? 'https://web.whatsapp.com/',
+                'whatsapp' => $config?->whatsapp ?? '6285856645555',
+                'whatsapp_formatted' => PhoneHelper::formatNomorHp($config?->whatsapp ?? '6285856645555'),
                 'telegram'   => $config?->telegram ?? 'http://telegram.com',
                 'ch_telegram'   => $config?->ch_telegram ?? 'http://telegram.com',
             ]);
