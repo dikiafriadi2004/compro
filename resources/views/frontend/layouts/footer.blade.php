@@ -38,10 +38,10 @@
                     <div class="footer-copy">
                         <ul class="navbar-footer">
                             <li>
-                                Chat : <a href="https://t.me/{{ $telegram }}">{{ $telegram }}</a>
+                                Chat : <a href="https://t.me/{{ $telegram }}" target="_blank">{{ $telegram }}</a>
                             </li>
                             <li>
-                                Channel : <a href="https://t.me/{{ $ch_telegram }}">{{ $ch_telegram }}</a>
+                                Channel : <a href="https://t.me/{{ $ch_telegram }}" target="_blank">{{ $ch_telegram }}</a>
                             </li>
                         </ul>
                     </div>
@@ -53,7 +53,7 @@
                     <div class="footer-copy">
                         <ul class="navbar-footer">
                             <li>
-                                Whatsapp : <a href="https://api.whatsapp.com/send?phone={{ $whatsapp }}">{{ $whatsapp_formatted }}</a>
+                                Whatsapp : <a href="https://api.whatsapp.com/send?phone={{ $whatsapp }}" target="_blank">{{ $whatsapp_formatted }}</a>
                             </li>
                         </ul>
                     </div>
