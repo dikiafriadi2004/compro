@@ -5,6 +5,11 @@
 @endsection
 
 @push('css')
+    <style>
+        li {
+            list-style: none;
+        }
+    </style>
 @endpush
 
 @section('breadcrumb')

@@ -30,6 +30,13 @@
                 </li>
             @endcan
             @can('Landing Show')
+                <li class="menu-item {{ request()->routeIs('pages.*') ? 'active' : '' }}">
+                    <a href="{{ route('pages.index') }}">
+                        <div class="icon-item"><i data-feather="file-text"></i></div><span>Pages</span>
+                    </a>
+                </li>
+            @endcan
+            @can('Landing Show')
                 <li class="menu-item {{ request()->routeIs('landing.*') ? 'active' : '' }}">
                     <a href="{{ route('landing.edit') }}">
                         <div class="icon-item"><i data-feather="file-text"></i></div><span>Landing Page</span>

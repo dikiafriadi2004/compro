@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             PermissionTableSeeder::class,
             ConfigTableSeeder::class,
-            LandingTableSeeder::class
+            LandingTableSeeder::class,
+            PageSeeder::class
         ]);
     }
 }

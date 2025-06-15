@@ -11,6 +11,9 @@ use App\Http\Controllers\Cms\CategoryController;
 use App\Http\Controllers\Cms\DashboardController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Cms\PageController as CmsPageController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -20,6 +23,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
+// Route khusus untuk contact form
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+// Route dinamis untuk semua page lain
+
+Route::get('/{slug}', [PageController::class, 'show'])->name('page.show');
 
 
 Route::middleware('auth')->group(function () {
@@ -27,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('cms')->group(function(){
+    Route::prefix('cms')->group(function () {
         // Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         // Post
@@ -39,6 +49,9 @@ Route::middleware('auth')->group(function () {
         Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
         Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
         Route::post('/post/upload', [PostController::class, 'upload'])->name('post.upload');
+
+        // Pages
+        Route::resource('/pages', CmsPageController::class);
 
         // Landing
         Route::get('/landing', [LandingController::class, 'edit'])->name('landing.edit')->middleware('permission:Landing Show');
@@ -57,7 +70,6 @@ Route::middleware('auth')->group(function () {
         // Roles
         Route::resource('/roles', RoleController::class)->middleware('permission:Role Show');
     });
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

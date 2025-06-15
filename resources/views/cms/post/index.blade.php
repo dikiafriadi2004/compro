@@ -5,6 +5,11 @@
 @endsection
 
 @push('css')
+    <style>
+        li {
+            list-style: none;
+        }
+    </style>
 @endpush
 
 @section('breadcrumb')
@@ -99,7 +104,8 @@
                                                             @endcan
 
                                                             @can('Posts Detail')
-                                                                <a href="{{ route('blog.show', $post->slug) }}" target="_blank" class="text-info p-2">
+                                                                <a href="{{ route('blog.show', $post->slug) }}" target="_blank"
+                                                                    class="text-info p-2">
                                                                     <i class="fa fa-eye"></i>
                                                                 </a>
                                                             @endcan
