@@ -5,6 +5,29 @@
 @endsection
 
 @push('css')
+<style>
+        .ck-editor__editable {
+            min-height: 300px;
+        }
+
+        .ck-content ul {
+            list-style-type: disc !important;
+            padding-left: 2rem !important;
+        }
+
+        .ck-content ol {
+            list-style-type: decimal !important;
+            padding-left: 2rem !important;
+        }
+
+        .ck-content blockquote {
+            border-left: 4px solid #ccc !important;
+            padding-left: 1rem !important;
+            margin: 1rem 0 !important;
+            color: #666 !important;
+            font-style: italic;
+        }
+    </style>
 @endpush
 
 @section('breadcrumb')
@@ -43,8 +66,9 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="form-label">Title</label>
-                                    <input class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                                        type="text" placeholder="Title" value="{{ old('title', $post->title) }}">
+                                    <input class="form-control @error('title') is-invalid @enderror" id="title"
+                                        name="title" type="text" placeholder="Title"
+                                        value="{{ old('title', $post->title) }}">
                                     @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -69,7 +93,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Content</label>
-                                    <textarea class="form-control @error('content') is-invalid @enderror" name="content" placeholder="Enter Content">{!! old('content', $post->content) !!}</textarea>
+                                    <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="editor" placeholder="Enter Content">{!! old('content', $post->content) !!}</textarea>
                                     @error('content')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -154,27 +178,34 @@
 @endsection
 
 @push('js')
-    <script type="text/javascript">
-        // Preview Thumbnail
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/ckeditor.js"></script>
+    <script>
+        // CKEditor Init
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                ckfinder: {
+                    uploadUrl: '{{ route('post.upload') }}?_token={{ csrf_token() }}'
+                },
+                toolbar: [
+                    'heading', '|',
+                    'bold', 'italic', 'underline', '|',
+                    'blockQuote', '|',
+                    'link', 'bulletedList', 'numberedList', '|',
+                    'insertTable', 'imageUpload', '|',
+                    'undo', 'redo'
+                ]
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
-                reader.onload = function(e) {
-                    $('#thumbnail-preview').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        // Generate Slug
+        // Slug Generator
         function createSlug(text) {
             return text.toLowerCase()
                 .trim()
-                .replace(/[^a-z0-9\s-]/g, '') // Hapus karakter non-alfanumerik
-                .replace(/\s+/g, '-') // Ganti spasi dengan strip
-                .replace(/-+/g, '-'); // Hindari multiple strip
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
         }
 
         $(document).ready(function() {
@@ -184,5 +215,16 @@
                 $('#slug').val(slug);
             });
         });
+
+        // Thumbnail Preview
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#thumbnail-preview').attr('src', e.target.result).removeClass('d-none');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 @endpush

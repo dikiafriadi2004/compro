@@ -71,9 +71,9 @@ ol, ul, dl {
   padding: 0;
 }
 
-li {
+/* li {
   list-style: none;
-}
+} */
 
 h1 {
   font-size: 34px;

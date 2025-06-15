@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\FileHelper;
 
 class PostController extends Controller
 {
@@ -104,10 +105,15 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show($slug)
+{
+    $post = Post::where('slug', $slug)
+        ->where('status', 'publish')
+        ->with('category', 'user')
+        ->firstOrFail();
+
+    return view('frontend.blog.show', compact('post'));
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -151,35 +157,38 @@ class PostController extends Controller
             'thumbnail.max' => 'The maximum size for thumbnails is 2Mb',
         ]);
 
+        // Handle Thumbnail Upload
         if ($request->hasFile('thumbnail')) {
+            $thumbPath = public_path(env('CUSTOM_THUMBNAIL_LOCATION'));
 
-            if (isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail)) {
-                unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail);
+            if (isset($post->thumbnail) && file_exists($thumbPath . "/" . $post->thumbnail)) {
+                unlink($thumbPath . "/" . $post->thumbnail);
             }
 
             $image = $request->file('thumbnail');
             $image_name = time() . "_" . $image->getClientOriginalName();
-            $destination_path = public_path(getenv('CUSTOM_THUMBNAIL_LOCATION'));
-            $image->move($destination_path, $image_name);
+            $image->move($thumbPath, $image_name);
         }
 
-        // $slug = $this->generateUniqueSlug($request->title);
+        // Bersihkan dan normalisasi content CKEditor
+        $newContent = preg_replace('/<figure[^>]*>\s*(<img[^>]+>)\s*<\/figure>/', '$1', $request->input('content'));
+
+        // Hapus gambar lama yang tidak lagi digunakan
+        FileHelper::syncEditorImages($post->content, $newContent);
 
         $data = [
             'title' => $request->title,
             'slug' => $request->slug,
             'meta_description' => $request->meta_description,
             'meta_keyword' => $request->meta_keyword,
-            'content' => $request->content,
+            'content' => $newContent,
             'status' => $request->status,
             'category_id' => $request->category_id,
             'thumbnail' => isset($image_name) ? $image_name : $post->thumbnail,
             'user_id' => Auth::user()->id,
         ];
 
-
-
-        Post::where('id', $post->id)->update($data);
+        $post->update($data);
 
         return redirect()->route('post.index')->with('success', 'Post has been updated');
     }
@@ -189,13 +198,45 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        if (isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail)) {
-            unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail);
+        // Hapus thumbnail
+        $thumbPath = public_path(env('CUSTOM_THUMBNAIL_LOCATION'));
+        if ($post->thumbnail && file_exists($thumbPath . '/' . $post->thumbnail)) {
+            unlink($thumbPath . '/' . $post->thumbnail);
         }
 
-        Post::where('id', $post->id)->delete();
+        // Hapus gambar dari konten editor
+        FileHelper::deleteImagesFromContent($post->content);
+
+        $post->delete();
 
         return redirect()->route('post.index')->with('success', 'Post has been deleted');
+    }
+
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $file     = $request->file('upload');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $folder   = env('CUSTOM_UPLOAD_LOCATION', 'upload');
+            $path     = public_path($folder);
+
+            if (!file_exists($path)) {
+                mkdir($path, 0755, true);
+            }
+
+            $file->move($path, $filename);
+
+            $url = asset($folder . '/' . $filename);
+
+            return response()->json([
+                'uploaded' => 1,
+                'fileName' => $filename,
+                'url' => $url
+            ]);
+        }
+
+        return response()->json(['uploaded' => 0, 'error' => ['message' => 'No file uploaded.']]);
     }
 
     // private function generateUniqueSlug($title)

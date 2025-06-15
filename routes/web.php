@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/post/{post}/edit', [PostController::class, 'edit'])->name('post.edit')->middleware('permission:Posts Edit');
         Route::put('/post/{post}', [PostController::class, 'update'])->name('post.update');
         Route::delete('/post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+        Route::post('/post/upload', [PostController::class, 'upload'])->name('post.upload');
 
         // Landing
         Route::get('/landing', [LandingController::class, 'edit'])->name('landing.edit')->middleware('permission:Landing Show');
