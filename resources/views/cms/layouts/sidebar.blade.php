@@ -76,6 +76,12 @@
                     </a>
                 </li>
             @endcan
+
+            <li class="menu-item {{ request()->routeIs('menus.*') ? 'active' : '' }}">
+                    <a href="{{ route('menus.index') }}">
+                        <div class="icon-item"><i data-feather="settings"></i></div><span>Menu Builder</span>
+                    </a>
+                </li>
         </ul>
     </div>
 </aside>

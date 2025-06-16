@@ -1,7 +1,7 @@
 @php
-    use App\Models\CMS\Page;
+    use Illuminate\Support\Str;
 
-    $pages = cache()->remember('navbar_pages', 60, fn() => Page::all());
+    $currentPath = request()->path(); // ex: '', 'blog', 'blog/slug'
 @endphp
 
 <nav class="navbar navbar-expand-lg bg-white">
@@ -16,29 +16,62 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('home.index') ? 'active' : '' }}"
-                        href="{{ route('home.index') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('blog.*') ? 'active' : '' }}"
-                        href="{{ route('blog.index') }}">Blog</a>
-                </li>
 
-                @foreach ($pages as $page)
+                @foreach ($menus as $menu)
                     @php
-                        $isContact = $page->slug === 'contact';
-                        $url = $isContact ? route('contact.index') : url($page->slug);
-                        $active = $isContact
-                            ? request()->routeIs('contact.index') ? 'active' : ''
-                            : (request()->is($page->slug) ? 'active' : '');
+                        $menuPath = ltrim(parse_url($menu->url, PHP_URL_PATH), '/');
+
+                        // Deteksi aktif
+                        $isActive = '';
+
+                        if ($menu->type === 'home' && $currentPath === '/') {
+                            $isActive = 'active';
+                        } elseif (Str::startsWith($currentPath, $menuPath)) {
+                            $isActive = 'active';
+                        }
+
+                        // Cek anak
+                        foreach ($menu->children as $child) {
+                            $childPath = ltrim(parse_url($child->url, PHP_URL_PATH), '/');
+                            if (Str::startsWith($currentPath, $childPath)) {
+                                $isActive = 'active';
+                                break;
+                            }
+                        }
                     @endphp
-                    <li class="nav-item">
-                        <a class="nav-link {{ $active }}" href="{{ $url }}">
-                            {{ $page->title }}
-                        </a>
-                    </li>
+
+                    {{-- Menu dengan dropdown --}}
+                    @if ($menu->children && $menu->children->count())
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ $isActive }}" href="#"
+                                id="menuDropdown{{ $menu->id }}" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{ $menu->title }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="menuDropdown{{ $menu->id }}">
+                                @foreach ($menu->children as $child)
+                                    @php
+                                        $childPath = ltrim(parse_url($child->url, PHP_URL_PATH), '/');
+                                        $childActive = Str::startsWith($currentPath, $childPath) ? 'active' : '';
+                                    @endphp
+                                    <li>
+                                        <a class="dropdown-item {{ $childActive }}" href="{{ url($child->url) }}">
+                                            {{ $child->title }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @else
+                        {{-- Menu biasa --}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ $isActive }}" href="{{ url($menu->url) }}">
+                                {{ $menu->title }}
+                            </a>
+                        </li>
+                    @endif
                 @endforeach
+
             </ul>
         </div>
     </div>
