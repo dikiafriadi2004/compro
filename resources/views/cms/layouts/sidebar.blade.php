@@ -1,20 +1,22 @@
 <aside class="codex-sidebar">
-    <div class="logo-gridwrap codex-brand"><a class="codexbrand-logo d-flex" href="index.html"><img class="img-fluid"
-                src="{{ asset('backend/assets/images/logo/logo.png') }}" style="height: 40px; width: auto" alt="theeme-logo"></a>
-        <div class="sidebar-action"><i data-feather="grid"> </i></div>
+    <div class="logo-gridwrap codex-brand">
+        <a class="codexbrand-logo d-flex" href="{{ route('dashboard') }}">
+            <img class="img-fluid" src="{{ asset('backend/assets/images/logo/logo.png') }}" style="height: 40px; width: auto" alt="theme-logo">
+        </a>
+        <div class="sidebar-action"><i data-feather="grid"></i></div>
     </div>
+
     <div class="codex-menuwrapper">
         <ul class="codex-menu custom-scroll" data-simplebar>
-            <li class="cdxmenu-title mt-0">
-                <h5>Dashboards</h5>
-            </li>
-            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}"><a
-                    href="{{ route('dashboard') }}">
+            <li class="cdxmenu-title mt-0"><h5>Dashboards</h5></li>
+            <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}">
                     <div class="icon-item"><i data-feather="home"></i></div><span>Dashboard</span>
-                </a></li>
-            <li class="cdxmenu-title">
-                <h5>pages</h5>
+                </a>
             </li>
+
+            <li class="cdxmenu-title"><h5>Pages</h5></li>
+
             @can('Posts Show')
                 <li class="menu-item {{ request()->routeIs('post.*') ? 'active' : '' }}">
                     <a href="{{ route('post.index') }}">
@@ -22,6 +24,7 @@
                     </a>
                 </li>
             @endcan
+
             @can('Category Show')
                 <li class="menu-item {{ request()->routeIs('categories.*') ? 'active' : '' }}">
                     <a href="{{ route('categories.index') }}">
@@ -29,13 +32,15 @@
                     </a>
                 </li>
             @endcan
-            @can('Landing Show')
+
+            @can('Pages Show')
                 <li class="menu-item {{ request()->routeIs('pages.*') ? 'active' : '' }}">
                     <a href="{{ route('pages.index') }}">
                         <div class="icon-item"><i data-feather="file-text"></i></div><span>Pages</span>
                     </a>
                 </li>
             @endcan
+
             @can('Landing Show')
                 <li class="menu-item {{ request()->routeIs('landing.*') ? 'active' : '' }}">
                     <a href="{{ route('landing.edit') }}">
@@ -43,12 +48,11 @@
                     </a>
                 </li>
             @endcan
-            @can('User Show')
-            <li class="cdxmenu-title">
-                <h5>Settings</h5>
-            </li>
 
-            @endcan
+            @if(auth()->user()->can('User Show') || auth()->user()->can('Role Show') || auth()->user()->can('Config Show'))
+                <li class="cdxmenu-title"><h5>Settings</h5></li>
+            @endif
+
             @can('User Show')
                 <li class="menu-item {{ request()->routeIs('users.*') ? 'active' : '' }}">
                     <a href="{{ route('users.index') }}">
@@ -56,10 +60,11 @@
                     </a>
                 </li>
             @endcan
+
             @can('Role Show')
                 <li class="menu-item {{ request()->routeIs('roles.*') ? 'active' : '' }}">
                     <a href="{{ route('roles.index') }}">
-                        <div class="icon-item"><i data-feather="users"></i></div><span>Roles</span>
+                        <div class="icon-item"><i data-feather="shield"></i></div><span>Roles</span>
                     </a>
                 </li>
             @endcan

@@ -10,6 +10,12 @@ return [
             'Posts Detail',
             'Posts Delete'
         ],
+        'Manage Pages' => [
+            'Pages Show',
+            'Pages Create',
+            'Pages Edit',
+            'Pages Delete'
+        ],
         'Manage Categories' => [
             'Category Show',
             'Category Create',

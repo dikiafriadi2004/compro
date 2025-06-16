@@ -15,14 +15,14 @@ class PageSeeder extends Seeder
     {
         Page::insert([
         [
-            'title' => 'Tentang Kami',
-            'slug' => 'tentang-kami',
+            'title' => 'Privacy',
+            'slug' => 'privacy',
             'content' => 'Ini adalah halaman tentang kami.',
         ],
         [
-            'title' => 'Kontak',
-            'slug' => 'kontak',
-            'content' => 'Ini adalah halaman kontak.',
+            'title' => 'Contact',
+            'slug' => 'contact',
+            'content' => '',
         ],
     ]);
     }

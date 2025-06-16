@@ -27,9 +27,7 @@ Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
-// Route dinamis untuk semua page lain
 
-Route::get('/{slug}', [PageController::class, 'show'])->name('page.show');
 
 
 Route::middleware('auth')->group(function () {
@@ -51,7 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/post/upload', [PostController::class, 'upload'])->name('post.upload');
 
         // Pages
-        Route::resource('/pages', CmsPageController::class);
+        Route::resource('/pages', CmsPageController::class)->middleware('permission:Pages Show|Pages Create|Pages Edit|Pages Delete');
 
         // Landing
         Route::get('/landing', [LandingController::class, 'edit'])->name('landing.edit')->middleware('permission:Landing Show');
@@ -73,3 +71,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+// Route dinamis untuk semua page lain
+
+Route::get('/{slug}', [PageController::class, 'show'])->name('page.show');

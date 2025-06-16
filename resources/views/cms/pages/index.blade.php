@@ -5,11 +5,11 @@
 @endsection
 
 @push('css')
-<style>
-    li {
-        list-style: none;
-    }
-</style>
+    <style>
+        li {
+            list-style: none;
+        }
+    </style>
 @endpush
 
 @section('breadcrumb')
@@ -39,8 +39,10 @@
                             <div class="row">
 
                                 <div class="mailreact-right">
+                                    @can('Pages Create')
                                         <a href="{{ route('pages.create') }}" class="btn btn-secondary float-end mb-2">Add
                                             Page</a>
+                                    @endcan
                                     <ul class="mailreact-list">
                                         <li>
                                             <form action="{{ route('pages.index') }}" method="GET">
@@ -82,21 +84,22 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
-
+                                                            @can('Pages Edit')
                                                                 <a href="{{ route('pages.edit', ['page' => $page->id]) }}"
                                                                     class="text-primary p-2">
                                                                     <i class="fa fa-edit"></i>
                                                                 </a>
+                                                            @endcan
 
+                                                            @can('Pages Delete')
                                                                 <a href="#" class="text-danger p-2"
                                                                     onclick="confirmDelete({{ $page->id }}, '{{ $page->title }}')">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
+                                                            @endcan
                                                         </form>
                                                     </div>
                                                 </td>
-
-
                                             </tr>
                                         @endforeach
                                     </tbody>
