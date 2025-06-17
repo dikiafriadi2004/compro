@@ -70,15 +70,15 @@ Route::middleware('auth')->group(function () {
         Route::resource('/roles', RoleController::class)->middleware('permission:Role Show');
 
         // Menu Builder
-        Route::get('menus', [MenuController::class, 'index'])->name('menus.index');
-        Route::get('menus/create', [MenuController::class, 'create'])->name('menus.create');
+        Route::get('menus', [MenuController::class, 'index'])->name('menus.index')->middleware('permission:Menu Show');
+        Route::get('menus/create', [MenuController::class, 'create'])->name('menus.create')->middleware('permission:Menu Create');
         Route::post('menus', [MenuController::class, 'store'])->name('menus.store');
 
         Route::post('/menus/order', [MenuController::class, 'updateOrder'])->name('menus.order');
 
-        Route::get('menus/{menu}/edit', [MenuController::class, 'edit'])->name('menus.edit');
+        Route::get('menus/{menu}/edit', [MenuController::class, 'edit'])->name('menus.edit')->middleware('permission:Menu Edit');
         Route::put('menus/{menu}', [MenuController::class, 'update'])->name('menus.update');
-        Route::delete('menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy');
+        Route::delete('menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy')->middleware('permission:Menu Delete');
     });
 });
 

@@ -37,13 +37,17 @@ return [
             'User Detail',
             'User Delete'
         ],
-
         'Manage Config' => [
             'Config Show'
         ],
-
         'Manage Landing' => [
             'Landing Show'
+        ],
+        'Manage Menus' => [
+            'Menu Show',
+            'Menu Create',
+            'Menu Edit',
+            'Menu Delete'
         ],
     ],
 

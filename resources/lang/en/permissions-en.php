@@ -36,4 +36,9 @@ return [
     'Config Show' => "Show",
     'Manage Landing' => 'Manage Landing',
     'Landing Show' => "Show",
+    'Manage Menus' => 'Manage Menus',
+    'Menu Show' => 'Show',
+    'Menu Create' => "Add",
+    'Menu Edit' => 'Edit',
+    'Menu Delete' => 'Delete',
 ];
