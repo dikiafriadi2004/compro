@@ -8,13 +8,16 @@
                 <span style="width:32px"></span>
             @endif
 
-            <span class="handle">☰</span>
+            <span class="handle"><i data-feather="menu"></i></span>
             <span class="menu-title">{{ $menu->title }}</span>
         </div>
 
         <div>
             @can('Menu Edit')
-                <a href="{{ route('menus.edit', $menu) }}" class="btn btn-sm btn-outline-primary me-1">✏️</a>
+                <a href="{{ route('menus.edit', $menu) }}" class="btn btn-icon btn-sm btn-outline-primary me-1"
+                    data-bs-toggle="tooltip" title="Edit Menu">
+                    <i data-feather="edit-2" width="16" height="16"></i>
+                </a>
             @endcan
 
             @can('Menu Delete')
@@ -22,9 +25,13 @@
                     data-title="{{ $menu->title }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-outline-danger">🗑️</button>
+                    <button type="submit" class="btn btn-icon btn-sm btn-outline-danger" data-bs-toggle="tooltip"
+                        title="Delete Menu">
+                        <i data-feather="trash-2" width="16" height="16"></i>
+                    </button>
                 </form>
             @endcan
+
 
         </div>
     </div>

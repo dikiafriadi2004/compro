@@ -88,6 +88,13 @@
             border: 2px dashed #74c0fc;
             border-radius: 8px !important
         }
+
+        .btn-icon {
+            padding: 4px 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 @endpush
 
@@ -114,9 +121,11 @@
         <div class="custom-container">
             <div class="container my-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3>📋 Navigation Menu List</h3>
+                    <h3><i data-feather="list" class="me-1"></i> Navigation Menu List</h3>
                     @can('Menu Create')
-                        <a href="{{ route('menus.create') }}" class="btn btn-primary">➕ Add Menu</a>
+                        <a href="{{ route('menus.create') }}" class="btn btn-primary">
+                            <i data-feather="plus" class="me-1"></i> Add Menu
+                        </a>
                     @endcan
                 </div>
 
