@@ -10,7 +10,7 @@
       <meta name="csrf-token" content="{{ csrf_token() }}">
       <title>{{ config('app.name', 'Laravel') }} | @yield('title')</title>
       <!-- shortcut icon-->
-      <link rel="icon" href="{{ asset('backend/assets/images/logo/logo.png') }}" type="image/x-icon">
+      <link rel="icon" href="{{ asset('backend/assets/images/logo/favicon.png') }}" type="image/x-icon">
       <link rel="shortcut icon" href="{{ asset('backend/assets/images/logo/logo.png') }}" type="image/x-icon">
       <!-- Fonts css  -->
       <link rel="preconnect" href="https://fonts.googleapis.com">
