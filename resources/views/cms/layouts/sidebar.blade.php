@@ -89,6 +89,14 @@
                 </li>
             @endcan
 
+            @can('Menu Show')
+                <li class="menu-item {{ request()->routeIs('menus.*') ? 'active' : '' }}">
+                    <a href="{{ route('menus.index') }}">
+                        <div class="icon-item"><i data-feather="menu"></i></div><span>Google Analytics</span>
+                    </a>
+                </li>
+            @endcan
+
         </ul>
     </div>
 </aside>
