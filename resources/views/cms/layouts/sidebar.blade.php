@@ -3,22 +3,25 @@
         <a class="codexbrand-logo d-flex" href="{{ route('dashboard') }}">
             <img class="img-fluid" src="{{ asset('backend/assets/images/logo/logo.png') }}" style="height: 40px; width: auto" alt="theme-logo">
         </a>
-        <div class="sidebar-action"><i data-feather="grid"></i></div>
+        <div class="sidebar-action">
+            <i data-feather="grid"> </i>
+        </div>
     </div>
-
-    <div class="codex-menuwrapper">
-        <ul class="codex-menu custom-scroll" data-simplebar>
-
+    <span class="menu-preve">
+        <i data-feather="chevron-left"></i>
+    </span>
+    <div class="codex-menuwrapper custom-scroll" data-simplebar>
+        <ul class="codex-menu">
             <!-- DASHBOARD -->
-            <li class="cdxmenu-title mt-0"><h5>Dashboards</h5></li>
+            <li class="cdxmenu-title mt-0"><h5>Dashboard</h5></li>
             <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <a href="{{ route('dashboard') }}">
                     <div class="icon-item"><i data-feather="home"></i></div><span>Dashboard</span>
                 </a>
             </li>
 
-            <!-- CONTENT PAGES -->
-            <li class="cdxmenu-title"><h5>Pages</h5></li>
+            <!-- CONTENT -->
+            <li class="cdxmenu-title"><h5>Content</h5></li>
 
             @can('Posts Show')
                 <li class="menu-item {{ request()->routeIs('post.*') ? 'active' : '' }}">
@@ -39,15 +42,39 @@
             @can('Pages Show')
                 <li class="menu-item {{ request()->routeIs('pages.*') ? 'active' : '' }}">
                     <a href="{{ route('pages.index') }}">
-                        <div class="icon-item"><i data-feather="file"></i></div><span>Pages</span>
+                        <div class="icon-item"><i data-feather="file-text"></i></div><span>Pages</span>
                     </a>
                 </li>
             @endcan
+
+            <!-- APPEARANCE -->
+            <li class="cdxmenu-title"><h5>Appearance</h5></li>
 
             @can('Landing Show')
                 <li class="menu-item {{ request()->routeIs('landing.*') ? 'active' : '' }}">
                     <a href="{{ route('landing.edit') }}">
                         <div class="icon-item"><i data-feather="monitor"></i></div><span>Landing Page</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('Menu Show')
+                <li class="menu-item {{ request()->routeIs('menus.*') ? 'active' : '' }}">
+                    <a href="{{ route('menus.index') }}">
+                        <div class="icon-item"><i data-feather="menu"></i></div><span>Menu Builder</span>
+                    </a>
+                </li>
+            @endcan
+
+            <!-- ANALYTICS -->
+            @can('Config Show')
+                <li class="cdxmenu-title"><h5>Analytics</h5></li>
+            @endcan
+
+            @can('Config Show')
+                <li class="menu-item {{ request()->routeIs('analytics.*') ? 'active' : '' }}">
+                    <a href="#">
+                        <div class="icon-item"><i data-feather="bar-chart-2"></i></div><span>Google Analytics</span>
                     </a>
                 </li>
             @endcan
@@ -76,27 +103,13 @@
             @can('Config Show')
                 <li class="menu-item {{ request()->routeIs('config.*') ? 'active' : '' }}">
                     <a href="{{ route('config.edit') }}">
-                        <div class="icon-item"><i data-feather="sliders"></i></div><span>Config</span>
+                        <div class="icon-item"><i data-feather="settings"></i></div><span>Config</span>
                     </a>
                 </li>
             @endcan
-
-            @can('Menu Show')
-                <li class="menu-item {{ request()->routeIs('menus.*') ? 'active' : '' }}">
-                    <a href="{{ route('menus.index') }}">
-                        <div class="icon-item"><i data-feather="menu"></i></div><span>Menu Builder</span>
-                    </a>
-                </li>
-            @endcan
-
-            @can('Menu Show')
-                <li class="menu-item {{ request()->routeIs('menus.*') ? 'active' : '' }}">
-                    <a href="{{ route('menus.index') }}">
-                        <div class="icon-item"><i data-feather="menu"></i></div><span>Google Analytics</span>
-                    </a>
-                </li>
-            @endcan
-
         </ul>
+        <span class="menu-next">
+            <i data-feather="chevron-right"></i>
+        </span>
     </div>
 </aside>

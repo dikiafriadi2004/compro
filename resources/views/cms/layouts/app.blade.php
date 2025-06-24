@@ -63,7 +63,7 @@
     <!-- Config -->
     <script src="{{ asset('backend/assets/js/layout-config.js') }}"></script>
     <!-- Customizer-->
-  <script src="{{ asset('backend/assets/js/customizer.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/customizer.js') }}"></script>
     <!-- Feather icons js-->
     <script src="{{ asset('backend/assets/js/icons/feather-icon/feather.js') }}"></script>
     <!-- Bootstrap js-->
