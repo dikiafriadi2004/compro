@@ -1,7 +1,8 @@
 <aside class="codex-sidebar">
     <div class="logo-gridwrap codex-brand">
         <a class="codexbrand-logo d-flex" href="{{ route('dashboard') }}">
-            <img class="img-fluid" src="{{ asset('backend/assets/images/logo/logo.png') }}" style="height: 40px; width: auto" alt="theme-logo">
+            <img class="img-fluid" src="{{ asset('backend/assets/images/logo/logo.png') }}"
+                style="height: 40px; width: auto" alt="theme-logo">
         </a>
         <div class="sidebar-action">
             <i data-feather="grid"> </i>
@@ -13,7 +14,9 @@
     <div class="codex-menuwrapper custom-scroll" data-simplebar>
         <ul class="codex-menu">
             <!-- DASHBOARD -->
-            <li class="cdxmenu-title mt-0"><h5>Dashboard</h5></li>
+            <li class="cdxmenu-title mt-0">
+                <h5>Dashboard</h5>
+            </li>
             <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <a href="{{ route('dashboard') }}">
                     <div class="icon-item"><i data-feather="home"></i></div><span>Dashboard</span>
@@ -21,7 +24,9 @@
             </li>
 
             <!-- CONTENT -->
-            <li class="cdxmenu-title"><h5>Content</h5></li>
+            <li class="cdxmenu-title">
+                <h5>Content</h5>
+            </li>
 
             @can('Posts Show')
                 <li class="menu-item {{ request()->routeIs('post.*') ? 'active' : '' }}">
@@ -48,7 +53,11 @@
             @endcan
 
             <!-- APPEARANCE -->
-            <li class="cdxmenu-title"><h5>Appearance</h5></li>
+            @if (auth()->user()->can('User Show') || auth()->user()->can('Role Show') || auth()->user()->can('Config Show'))
+                <li class="cdxmenu-title">
+                    <h5>Appearance</h5>
+                </li>
+            @endif
 
             @can('Landing Show')
                 <li class="menu-item {{ request()->routeIs('landing.*') ? 'active' : '' }}">
@@ -68,7 +77,9 @@
 
             <!-- ANALYTICS -->
             @can('Config Show')
-                <li class="cdxmenu-title"><h5>Analytics</h5></li>
+                <li class="cdxmenu-title">
+                    <h5>Analytics</h5>
+                </li>
             @endcan
 
             @can('Config Show')
@@ -80,8 +91,10 @@
             @endcan
 
             <!-- SETTINGS -->
-            @if(auth()->user()->can('User Show') || auth()->user()->can('Role Show') || auth()->user()->can('Config Show'))
-                <li class="cdxmenu-title"><h5>Settings</h5></li>
+            @if (auth()->user()->can('User Show') || auth()->user()->can('Role Show') || auth()->user()->can('Config Show'))
+                <li class="cdxmenu-title">
+                    <h5>Settings</h5>
+                </li>
             @endif
 
             @can('User Show')

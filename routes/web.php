@@ -1,13 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Cms\MenuController;
 use App\Http\Controllers\Cms\PostController;
 use App\Http\Controllers\Cms\RoleController;
 use App\Http\Controllers\Cms\UserController;
 use App\Http\Controllers\Cms\ConfigController;
 use App\Http\Controllers\Cms\LandingController;
+use App\Http\Controllers\Cms\ProfileController;
 use App\Http\Controllers\Cms\CategoryController;
 use App\Http\Controllers\Cms\DashboardController;
 use App\Http\Controllers\Frontend\BlogController;
@@ -32,9 +32,6 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('cms')->group(function () {
         // Dashboard
@@ -61,6 +58,10 @@ Route::middleware('auth')->group(function () {
 
         // Users
         Route::resource('/users', UserController::class)->middleware('permission:User Show|User Create|User Edit|User Detail|User Delete');
+
+        // Profile
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
         // Config
         Route::get('/config', [ConfigController::class, 'edit'])->name('config.edit')->middleware('permission:Config Show');
