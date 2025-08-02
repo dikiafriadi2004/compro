@@ -5,6 +5,7 @@
 /public/storage
 /public/thumbnails
 /public/upload
+/public/profile_photo
 /storage/*.key
 /storage/pail
 /vendor

@@ -21,6 +21,7 @@ class UserTableSeeder extends Seeder
                 'username' => 'dikiafriadi',
                 'email' => 'diki@konterdigital.co.id',
                 'email_verified_at' => now(),
+                'profile_photo'=> 'image.jpg',
                 'password' => Hash::make('20041992'),
                 'remember_token' => Str::random(10),
                 'created_at' => date('Y-m-d H:i:s'),
